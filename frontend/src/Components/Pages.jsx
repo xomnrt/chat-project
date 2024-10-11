@@ -1,21 +1,15 @@
 import React from 'react';
-import LoginForm from "./LoginForm.jsx"
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Navbar from "react-bootstrap/Navbar";
 
 const MainPage = () => {
 
     return (
-        <div>
+        <Container h-100>
             Welcome to the chat!
-        </div>
-    )
-}
-
-const LoginPage = () => {
-    return (
-        <div>
-            Welcome to the login page!
-            <LoginForm />
-        </div>
+        </Container>
     )
 }
 
@@ -27,4 +21,4 @@ const NotFoundPage = () => {
     )
 }
 
-export { MainPage, LoginPage, NotFoundPage };
+export { MainPage, NotFoundPage };

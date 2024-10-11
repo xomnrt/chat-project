@@ -1,8 +1,8 @@
 import { useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { MainPage, LoginPage, NotFoundPage } from './Components/Pages.jsx';
-import './App.css'
-
+import { MainPage, NotFoundPage } from './Components/Pages.jsx';
+import LoginPage from "./Components/LoginPage.jsx"
 
 function App() {
 
