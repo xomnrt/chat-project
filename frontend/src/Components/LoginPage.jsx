@@ -1,32 +1,19 @@
 import LoginForm from "./LoginForm.jsx"
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Navbar from "react-bootstrap/Navbar";
-
+import React from "react"
 
 
 const LoginPage = () => {
     return (
-        <Container className="vh-100 vw-100">
-            <Row>
+        <div className="d-flex flex-column h-100">
+            <Navbar expand="lg" className="bg-body-tertiary shadow-sm">
                 <Container>
-                    <Navbar expand="lg" className="bg-body-tertiary">
-                        <Container>
-                            <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-                        </Container>
-                    </Navbar>
+                    <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
                 </Container>
-            </Row>
-            <Row>
-                <Col>
-                    <Container className="vw-100">
-                        <LoginForm />
-                    </Container>
-                </Col>
-            </Row>
-        </Container>
-
+            </Navbar>
+            <LoginForm />
+        </div>
     )
 }
 

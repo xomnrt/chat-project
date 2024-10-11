@@ -1,8 +1,11 @@
-import { Formik, Form, Field, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Stack from 'react-bootstrap/Stack'
+import Form from 'react-bootstrap/Form';
+
 
 const validate = values => {
     const errors = {};
@@ -37,52 +40,59 @@ const LoginForm = () => {
         },
     });
     return (
-        <Container>
-            <Card>
-                <Card.Header>Войти</Card.Header>
-                <Card.Body>
-                    <form onSubmit={formik.handleSubmit}>
-                        <Row>
-                            <label htmlFor="username">Ваш ник</label>
-                            <input
-                                id="username"
-                                name="username"
-                                type="text"
-                                placeholder="Ваш ник"
-                                onChange={formik.handleChange}
-                                value={formik.values.username}
-                            />
-                            {formik.touched.username && formik.errors.username ? (
-                                <div>{formik.errors.username}</div>
-                            ) : null}
-                        </Row>
+        <Container fluid className="h-100">
+            <Row className="justify-content-center align-content-center h-100">
+                <div className="col-12 col-md-8 col-xxl-6">
+                    <Card className="shadow-sm">
+                        <Card.Body class="mx-auto row p-5">
+                            <Form onSubmit={formik.handleSubmit}>
+                                <Stack gap={3} >
+                                    <h1 className="text-center mb-4">Войти</h1>
+                                    <Form.Group className="mb-1" controlId="formUsername">
+                                        <Form.Label htmlFor="username"></Form.Label>
+                                        <Form.Control
+                                            id="username"
+                                            name="username"
+                                            type="text"
+                                            placeholder="Ваш ник"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.username}
+                                            className={formik.errors.username ? "border border-danger" : ""}
+                                        />
+                                        {formik.touched.username && formik.errors.username ? (
+                                            <div className="text-danger">{formik.errors.username}</div>
+                                        ) : <div></div>}
+                                    </Form.Group>
 
-                        <Row>
-                            <label htmlFor="password">Пароль</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                placeholder="Пароль"
-                                onChange={formik.handleChange}
-                                value={formik.values.password}
-                            />
+                                    <Form.Group className="mb-3" controlId="formPassword">
+                                        <Form.Label htmlFor="password"></Form.Label>
+                                        <Form.Control
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            placeholder="Пароль"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.password}
+                                        />
 
-                            {formik.touched.password && formik.errors.password ? (
-                                <div>{formik.errors.password}</div>
-                            ) : null}
-                        </Row>
+                                        {formik.touched.password && formik.errors.password ? (
+                                            <div className="text-danger">{formik.errors.password}</div>
+                                        ) : <div></div>}
+                                    </Form.Group>
 
-                        <Row>
-                            <Button variant="primary" type="submit">Войти</Button>
-                        </Row>
+                                    <div className="mx-auto mb-3 mt-1">
+                                        <Button variant="primary" type="submit" className="btn-lg">Войти</Button>
+                                    </div>
+                                </Stack>
 
-                    </form>
-                </Card.Body>
-                <Card.Footer className="text-muted text-center">
-                    <Card.Link href="/signup">Зарегистрироваться</Card.Link>
-                </Card.Footer>
-            </Card>
+                            </Form>
+                        </Card.Body>
+                        <Card.Footer className="text-muted text-center p-4">
+                            Нет аккаунта? <Card.Link href="/signup">Зарегистрироваться</Card.Link>
+                        </Card.Footer>
+                    </Card>
+                </div>
+            </Row>
         </Container>
     );
 }
