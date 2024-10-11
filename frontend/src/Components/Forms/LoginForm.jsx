@@ -54,7 +54,7 @@ const LoginForm = () => {
                                             id="username"
                                             name="username"
                                             type="text"
-                                            placeholder="Ваш ник"
+                                            placeholder="Имя пользователя"
                                             onChange={formik.handleChange}
                                             value={formik.values.username}
                                             className={formik.errors.username ? "border border-danger" : ""}
