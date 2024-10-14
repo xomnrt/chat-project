@@ -5,15 +5,16 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack'
 import Form from 'react-bootstrap/Form';
-
+import axios, { AxiosError } from "axios";
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../Slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const validate = values => {
     const errors = {};
 
     if (!values.username) {
-        errors.username = 'Необходимо ввести ник';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
-        errors.username = 'Неккоректный адрес электронной почты';
+        errors.username = 'Необходимо ввести имя пользователя';
     }
 
     if (!values.password) {
@@ -28,15 +29,41 @@ const validate = values => {
 
 
 const LoginForm = () => {
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch();
+
     const formik = useFormik({
         initialValues: {
             username: "",
             password: "",
         },
         validate,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
+            try {
+                const response = await axios.post('/api/v1/login', { username: values.username, password: values.password });
+                console.log(response.data); // => { token: ..., username: 'admin' }
+                const userInfo = response.data;
+                formik.resetForm();
+                dispatch(setUserInfo(userInfo))
+                navigate("/")
+            } catch (e) {
+                if (e instanceof AxiosError && e.status === 401) {
+                    formik.setErrors({
+                        password: "Неправильное имя пользователя или пароль"
+                    });
+                } else {
+                    console.log(e)
+                }
+
+            }
+
+
+
+
             console.log(JSON.stringify(values, null, 2));
-            formik.resetForm();
+
+
         },
     });
     return (
