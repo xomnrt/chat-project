@@ -1,4 +1,4 @@
-import RegistrationForm from "../Forms/RegistrationForm.jsx"
+import RegistrationForm from "../PagesInnerComponents/RegistrationForm.jsx"
 import Container from 'react-bootstrap/Container';
 import Navbar from "react-bootstrap/Navbar";
 

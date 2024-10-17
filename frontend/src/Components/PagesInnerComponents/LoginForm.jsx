@@ -7,7 +7,7 @@ import Stack from 'react-bootstrap/Stack'
 import Form from 'react-bootstrap/Form';
 import axios, { AxiosError } from "axios";
 import { useDispatch } from 'react-redux';
-import { setUserInfo } from '../Slices/authSlice';
+import { setUserInfo } from '../Slices/authSlice.js';
 import { useNavigate } from 'react-router-dom';
 
 const validate = values => {
@@ -46,7 +46,26 @@ const LoginForm = () => {
                 const userInfo = response.data;
                 formik.resetForm();
                 dispatch(setUserInfo(userInfo))
-                navigate("/")
+                navigate("/");
+
+                // try {
+                //     const channelsAndMessagesResponse = await axios.get('/api/v1/data', {
+                //         headers: {
+                //           Authorization: `Bearer ${store.getState().auth.token}`,
+                //         },
+                //       })
+
+                //     const channelsAndMessagesData = channelsAndMessagesResponse.data; // {channels: [{id, name, removable}, {}], messages: [], currentChannelId: number}
+                //     console.log(channelsAndMessagesData);
+                //     const channelsData = channelsAndMessagesData.channels;
+                //     channelsData.map((channel) => dispatch(setChannelInfo(channel)))
+
+                //     console.log(store.getState())
+                // }
+                // catch (e) {
+                //     console.log(e)
+                // }
+
             } catch (e) {
                 if (e instanceof AxiosError && e.status === 401) {
                     formik.setErrors({
@@ -57,9 +76,6 @@ const LoginForm = () => {
                 }
 
             }
-
-
-
 
             console.log(JSON.stringify(values, null, 2));
 

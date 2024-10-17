@@ -1,9 +1,10 @@
 import Navbar from "react-bootstrap/Navbar";
 import Container from 'react-bootstrap/Container';
+import ChatsView from '../PagesInnerComponents/ChatsView.jsx'
 
-const Chats = () => {
-    return;
-}
+// const ChatView = () => {
+//     return;
+// }
 
 const MainPage = () => {
     return (
@@ -13,7 +14,7 @@ const MainPage = () => {
                     <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
                 </Container>
             </Navbar>
-            <Chats></Chats>
+            <ChatsView></ChatsView>
         </div>
     )
 }

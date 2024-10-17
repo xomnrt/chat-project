@@ -1,4 +1,4 @@
-import LoginForm from "../Forms/LoginForm.jsx"
+import LoginForm from "../PagesInnerComponents/LoginForm.jsx"
 import Container from 'react-bootstrap/Container';
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
