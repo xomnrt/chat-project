@@ -2,7 +2,7 @@
 import { useCallback, useContext, useEffect } from "react";
 import { useDispatch, useSelector} from "react-redux";
 import { selectChannels, selectCurrentChannelId, selectCurrentChannel } from "../../slices/channelsSlice.js";
-import { selectMessages } from "../../slices/messagesSlice.js"
+// import { selectMessages } from "../../slices/messagesSlice.js"
 import { useFormik } from 'formik';
 
 import Button from 'react-bootstrap/Button';
