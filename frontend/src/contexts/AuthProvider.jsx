@@ -18,13 +18,11 @@ export const AuthProvider = ({children}) => {
 
     const logIn = async (username, password) => {
         const response = await axios.post(loginPath, { username, password });
-
         saveUserData(response.data)
     }
 
     const signUp = async (username, password) => {
         const response = await axios.post(signUpPath, { username, password });
-
         saveUserData(response.data)
     }
 
