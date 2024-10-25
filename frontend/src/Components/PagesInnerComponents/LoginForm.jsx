@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useFormik } from 'formik';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -5,10 +6,10 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack'
 import Form from 'react-bootstrap/Form';
-import axios, { AxiosError } from "axios";
-import { useDispatch } from 'react-redux';
-import { setUserInfo } from '../Slices/authSlice.js';
+import { AxiosError } from "axios";
 import { useNavigate } from 'react-router-dom';
+
+import {AuthContext} from '../../contexts/AuthProvider';
 
 const validate = values => {
     const errors = {};
@@ -26,12 +27,11 @@ const validate = values => {
     return errors;
 };
 
-
-
 const LoginForm = () => {
-    const navigate = useNavigate()
 
-    const dispatch = useDispatch();
+    const authContext = useContext(AuthContext);
+
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: {
@@ -41,31 +41,9 @@ const LoginForm = () => {
         validate,
         onSubmit: async (values) => {
             try {
-                const response = await axios.post('/api/v1/login', { username: values.username, password: values.password });
-                console.log(response.data); // => { token: ..., username: 'admin' }
-                const userInfo = response.data;
+                await authContext.sendLoginData(values.username, values.password);
                 formik.resetForm();
-                dispatch(setUserInfo(userInfo))
                 navigate("/");
-
-                // try {
-                //     const channelsAndMessagesResponse = await axios.get('/api/v1/data', {
-                //         headers: {
-                //           Authorization: `Bearer ${store.getState().auth.token}`,
-                //         },
-                //       })
-
-                //     const channelsAndMessagesData = channelsAndMessagesResponse.data; // {channels: [{id, name, removable}, {}], messages: [], currentChannelId: number}
-                //     console.log(channelsAndMessagesData);
-                //     const channelsData = channelsAndMessagesData.channels;
-                //     channelsData.map((channel) => dispatch(setChannelInfo(channel)))
-
-                //     console.log(store.getState())
-                // }
-                // catch (e) {
-                //     console.log(e)
-                // }
-
             } catch (e) {
                 if (e instanceof AxiosError && e.status === 401) {
                     formik.setErrors({
@@ -74,12 +52,9 @@ const LoginForm = () => {
                 } else {
                     console.log(e)
                 }
-
             }
 
             console.log(JSON.stringify(values, null, 2));
-
-
         },
     });
     return (
@@ -87,14 +62,13 @@ const LoginForm = () => {
             <Row className="justify-content-center align-content-center h-100">
                 <div className="col-12 col-md-8 col-xxl-6">
                     <Card className="shadow-sm">
-                        <Card.Body class="mx-auto row p-5">
+                        <Card.Body className="mx-auto row p-5">
                             <Form onSubmit={formik.handleSubmit}>
                                 <Stack gap={3} >
                                     <h1 className="text-center mb-4">Войти</h1>
                                     <Form.Group className="mb-1" controlId="formUsername">
-                                        <Form.Label htmlFor="username"></Form.Label>
+                                        <Form.Label></Form.Label>
                                         <Form.Control
-                                            id="username"
                                             name="username"
                                             type="text"
                                             placeholder="Имя пользователя"
@@ -108,9 +82,8 @@ const LoginForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formPassword">
-                                        <Form.Label htmlFor="password"></Form.Label>
+                                        <Form.Label></Form.Label>
                                         <Form.Control
-                                            id="password"
                                             name="password"
                                             type="password"
                                             placeholder="Пароль"
@@ -124,14 +97,14 @@ const LoginForm = () => {
                                     </Form.Group>
 
                                     <div className="mx-auto mb-3 mt-1">
-                                        <Button variant="primary" type="submit" className="btn-lg">Войти</Button>
+                                        <Button variant="success" type="submit" className="btn-lg">Войти</Button>
                                     </div>
                                 </Stack>
 
                             </Form>
                         </Card.Body>
                         <Card.Footer className="text-muted text-center p-4">
-                            Нет аккаунта? <Card.Link href="/signup">Зарегистрироваться</Card.Link>
+                            Нет аккаунта? <Card.Link href="/signup" className="link-underline link-underline-opacity-0 link-success" >Зарегистрироваться</Card.Link>
                         </Card.Footer>
                     </Card>
                 </div>

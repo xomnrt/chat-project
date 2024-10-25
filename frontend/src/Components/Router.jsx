@@ -3,20 +3,23 @@ import LoginPage from "./Pages/LoginPage.jsx"
 import MainPage from "./Pages/MainPage.jsx"
 import NotFoundPage from "./Pages/NotFoundPage.jsx"
 import RegistrationPage from "./Pages/RegistrationPage.jsx";
-import { selectToken } from './Slices/authSlice.js';
-import { useSelector } from "react-redux"
+import routes from "../routes/routes.js"
+import { AuthContext } from '../contexts/AuthProvider.jsx';
+import { useContext } from 'react';
 
 
 function Router() {
-    const token = useSelector(selectToken);
 
-    return (
+  const authContext = useContext(AuthContext);
+  console.log(authContext)
+
+  return (
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<RegistrationPage />} />
-        <Route path="/" element={token ? <MainPage /> : <Navigate replace to="/login" />} />
+        <Route path={routes.login} element={<LoginPage />} />
+        <Route path={routes.signup} element={<RegistrationPage />} />
+        <Route path={routes.main} element={authContext.isLoggedIn() ? <MainPage /> : <Navigate replace to={routes.login} />} />
         </Routes>
     </BrowserRouter>
   );

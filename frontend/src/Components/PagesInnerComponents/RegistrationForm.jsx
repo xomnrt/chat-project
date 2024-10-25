@@ -5,6 +5,10 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack'
 import Form from 'react-bootstrap/Form';
+import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import {AuthContext} from '../../contexts/AuthProvider.jsx';
+import { useContext } from 'react';
 
 
 const validate = values => {
@@ -16,7 +20,6 @@ const validate = values => {
         if (6 < values.username.length < 20) {
             errors.username = 'Имя пользователя должно быть от 3 до 20 символов';
         }
-
 
     if (!values.password) {
         errors.password = 'Необходимо ввести пароль';
@@ -35,8 +38,11 @@ const validate = values => {
 };
 
 
-
 const RegistrationForm = () => {
+
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate()
+
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -44,9 +50,24 @@ const RegistrationForm = () => {
             confirmPassword: "",
         },
         validate,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             console.log(JSON.stringify(values, null, 2));
             formik.resetForm();
+            try {
+                await authContext.sendSignupData(values.username, values.password);
+                formik.resetForm();
+                navigate("/");
+            } catch (e) {
+                if (e instanceof AxiosError && e.status === 409) {
+                    formik.setErrors({
+                        username: "Имя пользователя уже занято"
+                    });
+                } else {
+                    console.log(e)
+                }
+
+            }
+
         },
     });
     return (
@@ -54,14 +75,13 @@ const RegistrationForm = () => {
             <Row className="justify-content-center align-content-center h-100">
                 <div className="col-12 col-md-8 col-xxl-6">
                     <Card className="shadow-sm">
-                        <Card.Body class="mx-auto row p-5">
+                        <Card.Body className="mx-auto row p-5">
                             <Form onSubmit={formik.handleSubmit}>
                                 <Stack gap={3} >
                                     <h1 className="text-center mb-4">Зарегистрироваться</h1>
                                     <Form.Group className="mb-1" controlId="formUsername">
-                                        <Form.Label htmlFor="username"></Form.Label>
+                                        <Form.Label></Form.Label>
                                         <Form.Control
-                                            id="username"
                                             name="username"
                                             type="text"
                                             placeholder="Имя пользователя"
@@ -75,9 +95,8 @@ const RegistrationForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-1" controlId="formPassword">
-                                        <Form.Label htmlFor="password"></Form.Label>
+                                        <Form.Label></Form.Label>
                                         <Form.Control
-                                            id="password"
                                             name="password"
                                             type="password"
                                             placeholder="Пароль"
@@ -91,9 +110,8 @@ const RegistrationForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formConfirmPassword">
-                                        <Form.Label htmlFor="confirmPassword"></Form.Label>
+                                        <Form.Label></Form.Label>
                                         <Form.Control
-                                            id="confirmPassword"
                                             name="confirmPassword"
                                             type="password"
                                             placeholder="Повторите пароль"
@@ -107,7 +125,7 @@ const RegistrationForm = () => {
                                     </Form.Group>
 
                                     <div className="mx-auto mb-3 mt-1">
-                                        <Button variant="primary" type="submit" className="btn-lg">Зарегистрироваться</Button>
+                                        <Button variant="success" type="submit" className="btn-lg">Зарегистрироваться</Button>
                                     </div>
                                 </Stack>
 
