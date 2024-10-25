@@ -6,6 +6,6 @@ build: install
 	npm run build
 
 local-build:
-	npm run build
+	npm run local-build
 
 .PHONY: build install local-build
