@@ -26,10 +26,15 @@ export const AuthProvider = ({children}) => {
         saveUserData(response.data)
     }
 
+    const logOut = () => {
+        setUserData(null);
+    }
+
     const context = {
         sendLoginData: logIn,
         sendSignupData: signUp,
         isLoggedIn: () => !!userData,
+        logOut,
         userData,
     }
 

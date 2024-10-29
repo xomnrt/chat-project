@@ -11,7 +11,6 @@ import { useContext } from 'react';
 function Router() {
 
   const authContext = useContext(AuthContext);
-  console.log(authContext)
 
   return (
     <BrowserRouter>

@@ -1,16 +1,21 @@
 import { createContext, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthProvider.jsx';
+import { useDispatch } from 'react-redux';
+import { actions as MessageActions } from "../slices/messagesSlice.js";
+import { actions as ChannelsActions } from '../slices/channelsSlice.js'
+
 
 export const ChatApiContext = createContext();
 const getDataPath = '/api/v1/data'
 
-export const ChatApiProvider = ({ children }) => {
+export const ChatApiProvider = ({socket, children }) => {
 
     const authContext = useContext(AuthContext);
     const token = authContext.userData !== null ? authContext.userData.token : '';
+    const dispatch = useDispatch();
 
-    const getCoreChannels = async () => {
+    const getCoreChannelsData = async () => {
         const response = await axios.get(getDataPath, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -24,8 +29,59 @@ export const ChatApiProvider = ({ children }) => {
         return {channels, messages, currentChannelId };
     }
 
+    const addNewMessage = async (message) => {
+        socket.emit('newMessage', message, (response) => console.log(response.status));
+    }
+
+    const addNewChannel = (channel) => {
+        return;
+    }
+
+    const deleteChannel = (channel) => {
+        return;
+    }
+
+    const renameChannel = (channel) => {
+        return;
+    }
+
+    const connectSocket = () => {
+        socket.connect();
+
+        socket.on('newMessage', (message) => {
+            dispatch(MessageActions.addMessage(message));
+          });
+
+        socket.on("newChannel", (channel) => {
+            dispatch(ChannelsActions.addChannel(channel))
+
+        })
+
+        socket.on("removeChannel", (channel) => {
+            dispatch(ChannelsActions.deleteChannel(channel));
+
+        })
+
+        // socket.on("renameChannel", (channel) => {
+        //     dispatch(ChannelsActions.renameChannel(channel))
+        // })
+
+    }
+
+    const disconnectSocket = () => {
+        socket.off();
+        socket.disconnect();
+      };
+
     const context = {
-        getCoreChannelsData: getCoreChannels,
+        connectSocket,
+        disconnectSocket,
+
+        getCoreChannelsData,
+        addNewMessage,
+        addNewChannel,
+        deleteChannel,
+        renameChannel
     }
 
     return (
