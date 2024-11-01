@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
+import { object, string  } from 'yup';
 
 import { useDispatch, useSelector} from "react-redux";
 import { selectChannels, selectCurrentChannelId, selectCurrentChannel } from "../../slices/channelsSlice.js";
@@ -155,9 +156,8 @@ const toDayTime = (timeSending) => {
 
 const Message = ({message}) => {
 
-
     return (
-        <div className="mb-3">
+        <li className="mb-3">
             <div className="d-flex justify-content-between ">
                 <p className="small mb-1"><b>{message.username}</b></p>
                 <p className="small mb-1 text-muted">
@@ -171,30 +171,27 @@ const Message = ({message}) => {
                     </p>
                   </div>
                 </div>
-             </div>
+             </li>
     )
 }
 
 const RenderMessageList = () => {
+
+    const messageList = useRef(null);
 
     const allMessages = useSelector(selectMessages);
     const currentChannelId = useSelector(selectCurrentChannelId);
 
     const messages = allMessages.filter((message) => message.channelId === currentChannelId)
 
-    // const messages = [
-    //     {id: 1, username: "kotusha", body: "go pugs go!!!", timeSending: Date.now()},
-    //     {id: 2, username: "danila", body: "da da davayyy davayyy", timeSending: Date.now()}
-    // ]
-
     return (
-        <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+        <ul ref={messageList} id="messages-box" className="chat-messages overflow-auto px-5 list-unstyled">
             {messages.map((message) => {
                 return (
                        <Message message={message} key={message.id}></Message>
                 )
             })}
-        </div>
+        </ul>
     );
 }
 
@@ -208,6 +205,10 @@ const SendMessageForm = () => {
         initialValues: {
           body: '',
         },
+        validationSchema: object({
+            body: string()
+              .required(),
+          }),
         onSubmit: values => {
           chatContext.addNewMessage({
             body: values.body,

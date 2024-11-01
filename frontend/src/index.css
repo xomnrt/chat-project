@@ -12,3 +12,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.my-bg {
+
+  background: linear-gradient(45deg, transparent 49%, #82d266 49% 51%, transparent 51%), linear-gradient(-45deg, transparent 49%, #82d266 49% 51%, transparent 51%);
+  background-size: 6em 6em;
+  background-color: #ffffff;
+  backdrop-filter: blur(5px);
+
+}

@@ -1,27 +1,46 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, Link } from "react-router-dom";
+import routes from "../routes/routes.js"
+
 import LoginPage from "./Pages/LoginPage.jsx"
 import MainPage from "./Pages/MainPage.jsx"
 import NotFoundPage from "./Pages/NotFoundPage.jsx"
 import RegistrationPage from "./Pages/RegistrationPage.jsx";
-import routes from "../routes/routes.js"
+
+import LogOutButton from "./PagesInnerComponents/LogOutButton.jsx"
+
 import { AuthContext } from '../contexts/AuthProvider.jsx';
 import { useContext } from 'react';
 
+import Container from 'react-bootstrap/Container';
+import Navbar from "react-bootstrap/Navbar";
 
-function Router() {
+import { VantaBackground } from "./VantaBackground";
+
+const Router = () => {
 
   const authContext = useContext(AuthContext);
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path={routes.login} element={<LoginPage />} />
-        <Route path={routes.signup} element={<RegistrationPage />} />
-        <Route path={routes.main} element={authContext.isLoggedIn() ? <MainPage /> : <Navigate replace to={routes.login} />} />
+      {/* <VantaBackground> */}
+      <div
+        className="d-flex flex-column h-100 my-bg">
+        <Navbar expand="lg" className="bg-body-tertiary shadow-sm opacity-75">
+          <Container>
+              <Link className='navbar-brand' to="/">Hexlet Chat</Link>
+              {authContext.isLoggedIn() ? <LogOutButton /> : <></>}
+          </Container>
+        </Navbar>
+        <Routes>
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path={routes.login} element={<LoginPage />} />
+          <Route path={routes.signup} element={<RegistrationPage />} />
+          <Route path={routes.main} element={authContext.isLoggedIn() ? <MainPage /> : <Navigate replace to={routes.login} />} />
         </Routes>
+        </div>
+      {/* </VantaBackground> */}
     </BrowserRouter>
-  );
+  )
 }
 
 export default Router;
