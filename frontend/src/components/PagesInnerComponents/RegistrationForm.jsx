@@ -50,7 +50,6 @@ const RegistrationForm = () => {
         },
         validate,
         onSubmit: async (values) => {
-            console.log(JSON.stringify(values, null, 2));
             formik.resetForm();
             try {
                 await authContext.sendSignupData(values.username, values.password);

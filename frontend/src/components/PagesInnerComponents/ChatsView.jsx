@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect } from "react";
 
 import { useDispatch, useSelector} from "react-redux";
 import { selectChannels, selectCurrentChannelId, selectCurrentChannel } from "../../slices/channelsSlice.js";
@@ -11,15 +11,15 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import Avatar from "boring-avatars";
-import NewChannelModal from "./Modals/CreateNewChannel.jsx"
-import RenameChannelModal from "./Modals/RenameChannel.jsx"
-import DeleteChannelModal from "./Modals/DeleteChannel.jsx"
+import ModalWindow from "./Modals/Modal.jsx"
 
 import { AuthContext } from "../../contexts/AuthProvider.jsx";
 import { ChatApiContext } from "../../contexts/ChatApiProvider.jsx";
 
 import { actions as ChannelsActions } from '../../slices/channelsSlice.js'
 import { actions as MessageActions, selectMessages } from '../../slices/messagesSlice.js'
+import {actions as modalActions } from '../../slices/modalSlice';
+
 
 const UserIcon = ({username}) => {
 
@@ -64,9 +64,15 @@ const Channel = ({channel}) => {
 
     const currentVariant = currentChannelId === channel.id ? "success" : "outline-success";
 
-    const [RenameModalShow, setRenameModalShow] = useState(false);
-    const [DeleteModalShow, setDeleteModalShow] = useState(false);
+    const handleRenameChannel = () => {
+        dispatch(modalActions.setCurrentModalType({type: "RenameChannelModal", props: {channel}}));
+        dispatch(modalActions.toggleIsOpen());
+    }
 
+    const handleDeleteChannel = () => {
+        dispatch(modalActions.setCurrentModalType({type: "DeleteChannelModal", props: {channel}}));
+        dispatch(modalActions.toggleIsOpen());
+    }
 
     return (
         <Dropdown as={ButtonGroup} className="w-100 mb-2">
@@ -75,30 +81,17 @@ const Channel = ({channel}) => {
             variant={currentVariant}
             className="w-100"
             >
-                {channel.name}
-
+                # {channel.name}
                 {channel.removable ? "" : <LockedIcon></LockedIcon>}
             </Button>
-            <Dropdown.Toggle split variant={currentVariant} id="dropdown-split-basic" />
 
+            {channel.removable ?
+            <Dropdown.Toggle split variant={currentVariant} id="dropdown-split-basic">
             <Dropdown.Menu>
-               <Dropdown.Item onClick={() => setRenameModalShow(true)}>Переименовать</Dropdown.Item>
-               <RenameChannelModal
-               show={RenameModalShow}
-               onHide={() => setRenameModalShow(false)}/>
-
-               <Dropdown.Item onClick={() => setDeleteModalShow(true)}>Удалить</Dropdown.Item>
-               <DeleteChannelModal
-               show={DeleteModalShow}
-               onHide={() => setDeleteModalShow(false)}/>
-
-               {/* {channel.removable ? <Dropdown.Item onClick={() => setDeleteModalShow(true)}>Удалить</Dropdown.Item>
-               <DeleteChannelModal
-               show={DeleteModalShow}
-               onHide={() => setDeleteModalShow(false)}/> : ""} */}
-
+               <Dropdown.Item onClick={handleRenameChannel}>Переименовать</Dropdown.Item>
+               <Dropdown.Item onClick={handleDeleteChannel}>Удалить</Dropdown.Item>
              </Dropdown.Menu>
-
+            </Dropdown.Toggle> : ""}
 
         </Dropdown>
     )
@@ -120,20 +113,19 @@ const RenderChannelList = () => {
     )
 }
 
-const CreateNewChannelButton = () => {
 
-    const [modalShow, setModalShow] = useState(false);
+const CreateNewChannelButton = () => {
+    const dispatch = useDispatch();
+
+    const handleAddChannel = () => {
+        dispatch(modalActions.setCurrentModalType({type: "NewChannelModal", props: {}}));
+        dispatch(modalActions.toggleIsOpen());
+    }
 
     return (
-        <>
-        <button type="button" className="p-0 text-success btn btn-group-vertical" onClick={() => setModalShow(true)}>
+        <button type="button" className="p-0 text-success btn btn-group-vertical" onClick={handleAddChannel}>
         <AddIcon></AddIcon>
         </button>
-
-        <NewChannelModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}/>
-        </>
     )
 
 }
@@ -149,6 +141,7 @@ const ChannelsView = () => {
     </div>
     )
 }
+
 const toDayTime = (timeSending) => {
     const newDate = new Date(timeSending);
     const time = newDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -256,6 +249,8 @@ const SendMessageForm = () => {
 const MessagesView = () => {
     const currentChannel = useSelector(selectCurrentChannel);
     const messages = useSelector(selectMessages);
+    const messagesForCurrentChannel = messages.filter((message) => message.channelId === currentChannel.id)
+
 
     return (
         <div className="col p-0 h-100">
@@ -264,7 +259,7 @@ const MessagesView = () => {
                             <p className="m-0">
                                 <b>{currentChannel?.name}</b>
                             </p>
-                            <span className="text-muted">количество сообщений: {messages.length}</span>
+                            <span className="text-muted">количество сообщений: {messagesForCurrentChannel.length}</span>
                         </div>
                         <RenderMessageList></RenderMessageList>
                         <SendMessageForm></SendMessageForm>
@@ -281,6 +276,7 @@ const ChatsView = () => {
     useEffect(() => {
         (async () => {
             chatApiContext.connectSocket();
+
             const {channels, messages, currentChannelId} = await chatApiContext.getCoreChannelsData();
             dispatch(ChannelsActions.setChannelsInfo(channels));
             dispatch(ChannelsActions.setCurrentChannelId(currentChannelId));
@@ -295,12 +291,15 @@ const ChatsView = () => {
 
 
     return (
+        <>
         <div className="container h-100 my-4 overflow-hidden rounded shadow">
             <div className="row h-100 bg-white flex-md-row">
             <ChannelsView />
             <MessagesView/>
             </div>
+            <ModalWindow></ModalWindow>
         </div>
+        </>
     );
 }
 

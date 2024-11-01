@@ -29,20 +29,20 @@ export const ChatApiProvider = ({socket, children }) => {
         return {channels, messages, currentChannelId };
     }
 
-    const addNewMessage = async (message) => {
-        socket.emit('newMessage', message, (response) => console.log(response.status));
+    const addNewMessage = (message) => {
+        socket.emit('newMessage', message, (response) => console.log(`response status for message sending: ${response.status}`));
     }
 
     const addNewChannel = (channel) => {
-        return;
+        socket.emit('newChannel', channel, (response) => console.log(`response status for channel creation: ${response.status}`));
     }
 
     const deleteChannel = (channel) => {
-        return;
+        socket.emit('removeChannel', channel, (response) => console.log(`response status for channel deletion: ${response.status}`));
     }
 
     const renameChannel = (channel) => {
-        return;
+        socket.emit('renameChannel', channel, (response) => console.log(`response status for channel renaming: ${response.status}`));
     }
 
     const connectSocket = () => {
@@ -62,9 +62,9 @@ export const ChatApiProvider = ({socket, children }) => {
 
         })
 
-        // socket.on("renameChannel", (channel) => {
-        //     dispatch(ChannelsActions.renameChannel(channel))
-        // })
+        socket.on("renameChannel", (channel) => {
+            dispatch(ChannelsActions.renameChannel(channel))
+        })
 
     }
 

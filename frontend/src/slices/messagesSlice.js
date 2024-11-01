@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    messages: [], // {id, body, username, timeSending}
+    messages: [], // {id, body, username, timeSending, currentChannelId}
 }
 
 const messagesSlice = createSlice({
@@ -16,7 +16,10 @@ const messagesSlice = createSlice({
         addMessage: (state, action) => {
             // добавить проверку что сообщения такого нет
             // проверять по id
-            state.messages.push(action.payload);
+            if (state.messages.find((message) => message.id === action.payload.id) === undefined) {
+                state.messages.push(action.payload);
+            }
+
         },
 
         deleteMessages: (state, action) => {

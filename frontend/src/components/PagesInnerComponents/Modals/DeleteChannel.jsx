@@ -3,11 +3,25 @@ import Modal from "react-bootstrap/Modal"
 import Stack from "react-bootstrap/Stack";
 import Row from "react-bootstrap/Row";
 import Button from 'react-bootstrap/Button';
+import { useContext } from "react";
+import { ChatApiContext } from "../../../contexts/ChatApiProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { actions, selectCurrentChannelId } from "../../../slices/channelsSlice";
 
+const DeleteChannelForm = ({handleClose, channel}) => {
+  const dispatch = useDispatch()
 
-const DeleteChannelForm = () => {
+  const currentChannelId = useSelector(selectCurrentChannelId)
 
-    const deleteChannel = () => console.log("channel deleted");
+  const chatContext = useContext(ChatApiContext);
+
+  const deleteChannel = () => {
+    chatContext.deleteChannel(channel);
+    if (currentChannelId === channel.id) {
+      dispatch(actions.setCurrentChannelId(1));
+    }
+    handleClose();
+  }
 
       return (
         <Container fluid className="h-100">
@@ -17,7 +31,7 @@ const DeleteChannelForm = () => {
                                 <h4 className="text-center mt-1 mb-3">Вы уверены?</h4>
                                 <div className="mx-auto mb-3 mt-3">
                                     <Button variant="success" type="submit" className="btn-lg mx-2" onClick={deleteChannel}>Подтвердить</Button>
-                                    <Button variant="danger" type="submit" className="btn-lg mx-2" onClick={deleteChannel}>Отмена</Button>
+                                    <Button variant="danger" type="submit" className="btn-lg mx-2" onClick={handleClose}>Отмена</Button>
                                 </div>
                             </Stack>
             </div>
@@ -29,24 +43,19 @@ const DeleteChannelForm = () => {
  const DeleteChannelModal = (props) => {
 
     return (
-        <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+      <>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">Удалить канал</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
-        <DeleteChannelForm></DeleteChannelForm>
+        <DeleteChannelForm handleClose={props.handleClose} channel={props.channel}></DeleteChannelForm>
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={props.onHide}>Закрыть</Button>
+          <Button variant="success" onClick={props.handleClose}>Закрыть</Button>
         </Modal.Footer>
-      </Modal>
+      </>
 
     );
 }

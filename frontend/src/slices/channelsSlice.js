@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     channels: [],
-    // [{ id, name, removable }, {...}]
     currentChannelId: undefined,
 }
 
@@ -20,16 +19,24 @@ const channelsSlice = createSlice({
         },
 
         addChannel: (state, action) => {
-            state.channels.push(action.payload);
+            if (state.channels.find((channel) => channel.id === action.payload.id) === undefined) {
+                state.channels.push(action.payload);
+            }
         },
 
         deleteChannel: (state, action) => {
-            return state.channels.filter((channel) => channel.id !== action.payload.id)
+            state.channels = state.channels.filter((channel) => channel.id !== action.payload.id);
         },
 
-        // renameChannel: (state, action) => {
+        renameChannel: (state, action) => {
 
-        // }
+            const newName = action.payload.name;
+            const channelId = action.payload.id;
+
+            const channelToChange = state.channels.find((channel) => channel.id === channelId);
+            channelToChange.name = newName;
+
+        }
 
     }
 });

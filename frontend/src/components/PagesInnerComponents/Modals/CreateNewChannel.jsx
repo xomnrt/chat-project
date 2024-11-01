@@ -1,5 +1,6 @@
 import { object, string  } from 'yup';
 import { useFormik } from 'formik';
+import _ from "lodash"
 
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal"
@@ -8,14 +9,21 @@ import Row from "react-bootstrap/Row";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import { useSelector} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 
 import { selectChannels } from "../../../slices/channelsSlice.js";
+import { ChatApiContext } from '../../../contexts/ChatApiProvider.jsx';
+import { useContext } from 'react';
+
+import { actions as modalActions } from "../../../slices/modalSlice.js";
 
 
 const NewChannelNameForm = () => {
 
     const alreadyUsedChannelNames = useSelector(selectChannels).map((channel) => channel.name);
+    const chatContext = useContext(ChatApiContext);
+    const dispatch = useDispatch();
+
 
     const formik = useFormik({
         initialValues: {
@@ -25,12 +33,19 @@ const NewChannelNameForm = () => {
             newChannelName: string()
               .max(20, 'Название должно содержать не более 20 символов')
               .min(3, "Название должно содержать не менее 3 символов")
-              .notOneOf(alreadyUsedChannelNames)
+              .notOneOf(alreadyUsedChannelNames, "Название канала уже используется")
               .required('Необходимо ввести название канала'),
           }),
         onSubmit: values => {
 
-          alert(JSON.stringify(values, null, 2));
+          chatContext.addNewChannel(
+            {
+              name: values.newChannelName,
+              id: _.uniqueId,
+              removable: true
+            });
+          formik.resetForm();
+          dispatch(modalActions.toggleIsOpen())
         },
       });
       return (
@@ -39,8 +54,7 @@ const NewChannelNameForm = () => {
             <div className="col-12 col-md-8 col-xxl-6">
                         <Form onSubmit={formik.handleSubmit}>
                             <Stack gap={1} >
-                                <h4 className="text-center mt-1 mb-3">Новое название канала</h4>
-                                    <Form.Label></Form.Label>
+                                <h4 className="text-center mt-1 mb-3">Придумайте название канала</h4>
                                     <Form.Control
                                         name="newChannelName"
                                         type="text"
@@ -64,15 +78,10 @@ const NewChannelNameForm = () => {
       );
 }
 
- const NewChannelModal = (props) => {
+ const NewChannelModal = ({handleClose}) => {
 
     return (
-        <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+      <>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">Создать новый канал</Modal.Title>
         </Modal.Header>
@@ -82,9 +91,9 @@ const NewChannelNameForm = () => {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={props.onHide}>Закрыть</Button>
+          <Button variant="success" onClick={handleClose}>Закрыть</Button>
         </Modal.Footer>
-      </Modal>
+      </>
 
     );
 }
