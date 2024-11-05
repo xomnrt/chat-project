@@ -18,13 +18,13 @@ const validate = values => {
     if (!values.username) {
         errors.username = 'Необходимо ввести имя пользователя';
     } else if (!(6 < values.username.length && values.username.length < 20)) {
-            errors.username = 'Имя пользователя должно быть от 6 до 20 символов';
+            errors.username = 'От 3 до 20 символов';
     }
 
     if (!values.password) {
         errors.password = 'Необходимо ввести пароль';
     } else if (values.password.length < 6) {
-        errors.password = 'Пароль должен содержать не менее 6 символов';
+        errors.password = 'Не менее 6 символов';
     }
 
     if (!values.confirmPassword) {
