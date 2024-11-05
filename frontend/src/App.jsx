@@ -17,8 +17,8 @@ const App = () => {
   const socket = io('/', { autoConnect: false });
 
   const censorship = LeoProfanity;
-  censorship.loadDictionary('ru');
-  censorship.loadDictionary('en');
+  censorship.add(censorship.getDictionary('ru'))
+  censorship.add(censorship.getDictionary('en'))
 
   return (
   <I18nextProvider i18n={i18next} defaultNS={'translation'}>
