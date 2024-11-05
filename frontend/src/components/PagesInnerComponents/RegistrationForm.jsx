@@ -17,7 +17,7 @@ const validate = values => {
 
     if (!values.username) {
         errors.username = 'Необходимо ввести имя пользователя';
-    } else if (!(6 < values.username.length && values.username.length < 20)) {
+    } else if (!(3 < values.username.length && values.username.length < 20)) {
             errors.username = 'Имя пользователя должно быть от 3 до 20 символов';
     }
 
@@ -93,7 +93,7 @@ const RegistrationForm = () => {
                                             value={formik.values.username}
                                             className={formik.errors.username ? "border border-danger" : ""}
                                         />
-                                        {(formik.errors.username) ?
+                                        {formik.errors.username ?
                                         <div className="text-danger">{formik.errors.username}</div> : <div></div>
                                         }
                                     </Form.Group>
