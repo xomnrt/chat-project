@@ -84,7 +84,7 @@ const RegistrationForm = () => {
                                 <Stack gap={3} >
                                     <h1 className="text-center mb-4">{t("signUp")}</h1>
                                     <Form.Group className="mb-1" controlId="formUsername">
-                                        <Form.Label></Form.Label>
+                                        <Form.Label>Имя пользователя</Form.Label>
                                         <Form.Control
                                             name="username"
                                             type="text"
@@ -99,7 +99,7 @@ const RegistrationForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-1" controlId="formPassword">
-                                        <Form.Label></Form.Label>
+                                        <Form.Label>Пароль</Form.Label>
                                         <Form.Control
                                             name="password"
                                             type="password"
@@ -114,11 +114,11 @@ const RegistrationForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formConfirmPassword">
-                                        <Form.Label></Form.Label>
+                                        <Form.Label>Подтвердите пароль</Form.Label>
                                         <Form.Control
                                             name="confirmPassword"
                                             type="password"
-                                            placeholder="Подтвердите пароль"
+                                            placeholder="Повторите пароль"
                                             onChange={formik.handleChange}
                                             value={formik.values.confirmPassword}
                                         />
