@@ -69,11 +69,11 @@ const LoginForm = () => {
                                 <Stack gap={3} >
                                     <h1 className="text-center mb-4">{t("login")}</h1>
                                     <Form.Group className="mb-1" controlId="formUsername">
-                                        <Form.Label>Ваш ник</Form.Label>
+                                        <Form.Label></Form.Label>
                                         <Form.Control
                                             name="username"
                                             type="text"
-                                            placeholder="Имя пользователя"
+                                            placeholder="Ваш ник"
                                             onChange={formik.handleChange}
                                             value={formik.values.username}
                                             className={formik.errors.username ? "border border-danger" : ""}
@@ -84,7 +84,7 @@ const LoginForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formPassword">
-                                        <Form.Label>Пароль</Form.Label>
+                                        <Form.Label></Form.Label>
                                         <Form.Control
                                             name="password"
                                             type="password"
