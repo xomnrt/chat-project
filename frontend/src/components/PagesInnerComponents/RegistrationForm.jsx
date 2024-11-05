@@ -18,13 +18,13 @@ const validate = values => {
     if (!values.username) {
         errors.username = 'Необходимо ввести имя пользователя';
     } else if (!(6 < values.username.length && values.username.length < 20)) {
-            errors.username = 'От 3 до 20 символов';
+            errors.username = 'Имя пользователя должно быть от 3 до 20 символов';
     }
 
     if (!values.password) {
         errors.password = 'Необходимо ввести пароль';
     } else if (values.password.length < 6) {
-        errors.password = 'Не менее 6 символов';
+        errors.password = 'Пароль должен содержать не менее 6 символов';
     }
 
     if (!values.confirmPassword) {
@@ -84,7 +84,7 @@ const RegistrationForm = () => {
                                 <Stack gap={3} >
                                     <h1 className="text-center mb-4">{t("signUp")}</h1>
                                     <Form.Group className="mb-1" controlId="formUsername">
-                                        <Form.Label></Form.Label>
+                                        <Form.Label>Имя пользователя</Form.Label>
                                         <Form.Control
                                             name="username"
                                             type="text"
@@ -99,7 +99,7 @@ const RegistrationForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-1" controlId="formPassword">
-                                        <Form.Label></Form.Label>
+                                        <Form.Label>Пароль</Form.Label>
                                         <Form.Control
                                             name="password"
                                             type="password"
@@ -114,7 +114,7 @@ const RegistrationForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formConfirmPassword">
-                                        <Form.Label></Form.Label>
+                                        <Form.Label>Подтвердите пароль</Form.Label>
                                         <Form.Control
                                             name="confirmPassword"
                                             type="password"
