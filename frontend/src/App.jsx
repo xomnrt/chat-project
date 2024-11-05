@@ -18,6 +18,7 @@ const App = () => {
 
   const censorship = LeoProfanity;
   censorship.loadDictionary('ru');
+  censorship.loadDictionary('en');
 
   return (
   <I18nextProvider i18n={i18next} defaultNS={'translation'}>
