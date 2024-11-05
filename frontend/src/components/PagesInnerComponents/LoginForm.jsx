@@ -69,7 +69,7 @@ const LoginForm = () => {
                                 <Stack gap={3} >
                                     <h1 className="text-center mb-4">{t("login")}</h1>
                                     <Form.Group className="mb-1" controlId="formUsername">
-                                        <Form.Label></Form.Label>
+                                        <Form.Label>Ваш ник</Form.Label>
                                         <Form.Control
                                             name="username"
                                             type="text"
@@ -84,7 +84,7 @@ const LoginForm = () => {
                                     </Form.Group>
 
                                     <Form.Group className="mb-3" controlId="formPassword">
-                                        <Form.Label></Form.Label>
+                                        <Form.Label>Пароль</Form.Label>
                                         <Form.Control
                                             name="password"
                                             type="password"
