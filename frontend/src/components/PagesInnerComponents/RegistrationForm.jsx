@@ -9,6 +9,7 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {AuthContext} from '../../contexts/AuthProvider.jsx';
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 const validate = values => {
@@ -23,14 +24,14 @@ const validate = values => {
     if (!values.password) {
         errors.password = 'Необходимо ввести пароль';
     } else if (values.password.length < 6) {
-        errors.password = 'Пароль должен содержать от 6 символов';
+        errors.password = 'Пароль должен содержать не менее 6 символов';
     }
 
     if (!values.confirmPassword) {
-        errors.confirmPassword = 'Повторите пароль';
+        errors.confirmPassword = 'Подтвердите пароль';
     }
     else if (values.password !== values.confirmPassword) {
-        errors.confirmPassword = 'Пароли не совпадают';
+        errors.confirmPassword = 'Пароли должны совпадать';
     }
 
     return errors;
@@ -68,6 +69,9 @@ const RegistrationForm = () => {
 
         },
     });
+
+    const {t} = useTranslation();
+
     return (
         <Container fluid className="h-100">
             <Row className="justify-content-center align-content-center h-100">
@@ -76,7 +80,7 @@ const RegistrationForm = () => {
                         <Card.Body className="mx-auto row p-5">
                             <Form onSubmit={formik.handleSubmit}>
                                 <Stack gap={3} >
-                                    <h1 className="text-center mb-4">Зарегистрироваться</h1>
+                                    <h1 className="text-center mb-4">{t("signUp")}</h1>
                                     <Form.Group className="mb-1" controlId="formUsername">
                                         <Form.Label></Form.Label>
                                         <Form.Control
@@ -123,7 +127,7 @@ const RegistrationForm = () => {
                                     </Form.Group>
 
                                     <div className="mx-auto mb-3 mt-1">
-                                        <Button variant="success" type="submit" className="btn-lg">Зарегистрироваться</Button>
+                                        <Button variant="success" type="submit" className="btn-lg">{t("signUp")}</Button>
                                     </div>
                                 </Stack>
 

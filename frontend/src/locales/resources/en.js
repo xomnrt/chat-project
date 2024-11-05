@@ -1,22 +1,29 @@
 export default {
     translation: {
-        header: 'RSS Feed',
-        starting_phrase: 'Start reading RSS today! It is easy and fun!',
-        link: 'RSS link',
-        add: 'Add',
-        example: 'Пример: https://lorem-rss.hexlet.app/feed',
-        created_by: 'created by',
+        notFoundAlertTitle: "404 Not Found",
+        notFoundAlertText: "The page you're searching for is not there :)",
 
-        invalid_url: 'Please enter a valid URL',
-        already_added_url: 'This URL is already added!',
-        success_message: 'Success! The url is added!',
-        empty_input: 'Field is empty!',
-        invalid_rss_url: 'There is no valid RSS',
-        view: 'View',
-        network_error: 'Network error',
+        rename: "Rename",
+        delete: "Delete",
+        send: "Send",
+        login: "Login",
+        logout: "Logout",
+        confirm: "Confirm",
+        close: "Close",
+        cancel: "Cancel",
+        sure: "Are you sure?",
 
-        posts: 'Posts',
-        feeds: 'Feeds',
+        channels: "Channels",
+        messagesCount: "messages: ",
+
+        noRegistrationData: "No account? ",
+        signUp: "Sign Up",
+
+        createNewChannelName: "Create new channel name",
+        createNewChannel: "Create new channel",
+        newChannelName: "New channel name",
+        renameChannel: "Rename channel",
+        deleteChannel: "Delete channel",
 
     },
 };

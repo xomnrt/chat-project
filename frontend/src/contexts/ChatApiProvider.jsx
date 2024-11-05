@@ -4,7 +4,7 @@ import { AuthContext } from './AuthProvider.jsx';
 import { useDispatch } from 'react-redux';
 import { actions as MessageActions } from "../slices/messagesSlice.js";
 import { actions as ChannelsActions } from '../slices/channelsSlice.js'
-
+import { toast } from 'react-toastify';
 
 export const ChatApiContext = createContext();
 const getDataPath = '/api/v1/data'
@@ -34,15 +34,20 @@ export const ChatApiProvider = ({socket, children }) => {
     }
 
     const addNewChannel = (channel) => {
-        socket.emit('newChannel', channel, (response) => console.log(`response status for channel creation: ${response.status}`));
+        socket.emit('newChannel', channel, (response) => console.log(`response status for channel creation: ${response.status}`, response));
+
+        toast("Канал успешно создан!");
     }
 
     const deleteChannel = (channel) => {
         socket.emit('removeChannel', channel, (response) => console.log(`response status for channel deletion: ${response.status}`));
+        toast(`Канал ${channel.name} удален`);
     }
 
     const renameChannel = (channel) => {
         socket.emit('renameChannel', channel, (response) => console.log(`response status for channel renaming: ${response.status}`));
+        toast(`Канал переименован`);
+
     }
 
     const connectSocket = () => {

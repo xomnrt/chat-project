@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import { useCallback, useContext, useEffect, useRef } from "react";
 import { object, string  } from 'yup';
+import { useTranslation } from 'react-i18next';
+import LeoProfanity from 'leo-profanity';
 
 import { useDispatch, useSelector} from "react-redux";
 import { selectChannels, selectCurrentChannelId, selectCurrentChannel } from "../../slices/channelsSlice.js";
@@ -20,6 +22,7 @@ import { ChatApiContext } from "../../contexts/ChatApiProvider.jsx";
 import { actions as ChannelsActions } from '../../slices/channelsSlice.js'
 import { actions as MessageActions, selectMessages } from '../../slices/messagesSlice.js'
 import {actions as modalActions } from '../../slices/modalSlice';
+
 
 
 const UserIcon = ({username}) => {
@@ -56,6 +59,9 @@ const AddIcon = () => {
 }
 
 const Channel = ({channel}) => {
+    const { t } = useTranslation();
+    const censorship = LeoProfanity;
+
     const dispatch = useDispatch();
     const currentChannelId = useSelector(selectCurrentChannelId);
 
@@ -82,15 +88,17 @@ const Channel = ({channel}) => {
             variant={currentVariant}
             className="w-100"
             >
-                # {channel.name}
+                # {censorship.clean(channel.name)}
                 {channel.removable ? "" : <LockedIcon></LockedIcon>}
             </Button>
 
             {channel.removable ?
+
             <Dropdown.Toggle split variant={currentVariant} id="dropdown-split-basic">
+                <span className="visually-hidden">{t("manageChannel")}</span>
             <Dropdown.Menu>
-               <Dropdown.Item onClick={handleRenameChannel}>Переименовать</Dropdown.Item>
-               <Dropdown.Item onClick={handleDeleteChannel}>Удалить</Dropdown.Item>
+               <Dropdown.Item onClick={handleRenameChannel}>{t("rename")}</Dropdown.Item>
+               <Dropdown.Item onClick={handleDeleteChannel}>{t("delete")}</Dropdown.Item>
              </Dropdown.Menu>
             </Dropdown.Toggle> : ""}
 
@@ -132,10 +140,12 @@ const CreateNewChannelButton = () => {
 }
 
 const ChannelsView = () => {
+    const {t} = useTranslation();
+
     return (
         <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
         <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-            <b>Каналы</b>
+            <b>{t("channels")}</b>
             <CreateNewChannelButton></CreateNewChannelButton>
         </div>
         <RenderChannelList/>
@@ -155,6 +165,7 @@ const toDayTime = (timeSending) => {
 }
 
 const Message = ({message}) => {
+    const censorship = LeoProfanity;
 
     return (
         <li className="mb-3">
@@ -167,7 +178,7 @@ const Message = ({message}) => {
                 <UserIcon username={message.username}/>
                   <div>
                     <p className="small p-2 ms-3 mb-3 rounded-4 px-3" style={{ backgroundColor: "#f5f6f7" }}>
-                    {message.body}
+                    {censorship.clean(message.body)}
                     </p>
                   </div>
                 </div>
@@ -196,6 +207,8 @@ const RenderMessageList = () => {
 }
 
 const SendMessageForm = () => {
+
+    const {t} = useTranslation()
 
     const authContext = useContext(AuthContext);
     const chatContext = useContext(ChatApiContext);
@@ -236,7 +249,7 @@ const SendMessageForm = () => {
                 />
 
                 <Button variant="outline-success" id="button-addon2" type="submit" >
-                    <b>Отправить</b>
+                    <b>{t("send")}</b>
                 </Button>
             </InputGroup>
         </Form>
@@ -248,10 +261,10 @@ const SendMessageForm = () => {
 
 
 const MessagesView = () => {
+    const {t} = useTranslation();
     const currentChannel = useSelector(selectCurrentChannel);
     const messages = useSelector(selectMessages);
     const messagesForCurrentChannel = messages.filter((message) => message.channelId === currentChannel.id)
-
 
     return (
         <div className="col p-0 h-100">
@@ -260,7 +273,7 @@ const MessagesView = () => {
                             <p className="m-0">
                                 <b>{currentChannel?.name}</b>
                             </p>
-                            <span className="text-muted">количество сообщений: {messagesForCurrentChannel.length}</span>
+                            <span className="text-muted">{t("messagesCount")}{messagesForCurrentChannel.length}</span>
                         </div>
                         <RenderMessageList></RenderMessageList>
                         <SendMessageForm></SendMessageForm>

@@ -13,6 +13,7 @@ import { useSelector} from "react-redux";
 import { selectChannels } from "../../../slices/channelsSlice.js";
 import { ChatApiContext } from '../../../contexts/ChatApiProvider.jsx';
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const RenameChannelForm = ({handleClose, channel}) => {
 
@@ -40,13 +41,16 @@ const RenameChannelForm = ({handleClose, channel}) => {
 
         },
       });
+
+      const {t} = useTranslation();
+
       return (
         <Container fluid className="h-100">
         <Row className="justify-content-center align-content-center h-100">
             <div className="col-12 col-md-8 col-xxl-6">
                         <Form onSubmit={formik.handleSubmit}>
                             <Stack gap={1} >
-                                <h4 className="text-center mt-1 mb-3">Новое название канала</h4>
+                                <h4 className="text-center mt-1 mb-3">{t("newChannelName")}</h4>
                                     <Form.Label></Form.Label>
                                     <Form.Control
                                         name="newChannelName"
@@ -61,7 +65,7 @@ const RenameChannelForm = ({handleClose, channel}) => {
                                     ) : <div></div>}
 
                                 <div className="mx-auto mb-3 mt-3">
-                                    <Button variant="success" type="submit" className="btn-lg">Подтвердить</Button>
+                                    <Button variant="success" type="submit" className="btn-lg">{t("confirm")}</Button>
                                 </div>
                             </Stack>
                         </Form>
@@ -73,11 +77,12 @@ const RenameChannelForm = ({handleClose, channel}) => {
 
  const RenameChannelModal = (props) => {
 
+  const {t} = useTranslation();
 
     return (
         <>
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Переименовать канал</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">{t("renameChannel")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
@@ -85,7 +90,7 @@ const RenameChannelForm = ({handleClose, channel}) => {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={props.handleClose}>Закрыть</Button>
+          <Button variant="success" onClick={props.handleClose}>{t("close")}</Button>
         </Modal.Footer>
       </>
 

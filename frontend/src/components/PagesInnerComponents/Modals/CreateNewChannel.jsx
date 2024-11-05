@@ -1,6 +1,7 @@
 import { object, string  } from 'yup';
 import { useFormik } from 'formik';
 import _ from "lodash"
+import { toast } from 'react-toastify';
 
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal"
@@ -16,6 +17,7 @@ import { ChatApiContext } from '../../../contexts/ChatApiProvider.jsx';
 import { useContext } from 'react';
 
 import { actions as modalActions } from "../../../slices/modalSlice.js";
+import { useTranslation } from 'react-i18next';
 
 
 const NewChannelNameForm = () => {
@@ -48,13 +50,16 @@ const NewChannelNameForm = () => {
           dispatch(modalActions.toggleIsOpen())
         },
       });
+
+      const {t} = useTranslation();
+
       return (
         <Container fluid className="h-100">
         <Row className="justify-content-center align-content-center h-100">
             <div className="col-12 col-md-8 col-xxl-6">
                         <Form onSubmit={formik.handleSubmit}>
                             <Stack gap={1} >
-                                <h4 className="text-center mt-1 mb-3">Придумайте название канала</h4>
+                                <h4 className="text-center mt-1 mb-3">{t("createNewChannelName")}</h4>
                                     <Form.Control
                                         name="newChannelName"
                                         type="text"
@@ -68,7 +73,7 @@ const NewChannelNameForm = () => {
                                     ) : <div></div>}
 
                                 <div className="mx-auto mb-3 mt-3">
-                                    <Button variant="success" type="submit" className="btn-lg">Подтвердить</Button>
+                                    <Button variant="success" type="submit" className="btn-lg">{t("confirm")}</Button>
                                 </div>
                             </Stack>
                         </Form>
@@ -80,10 +85,12 @@ const NewChannelNameForm = () => {
 
  const NewChannelModal = ({handleClose}) => {
 
+  const {t} = useTranslation()
+
     return (
       <>
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Создать новый канал</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">{t("createNewChannel")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
@@ -91,7 +98,7 @@ const NewChannelNameForm = () => {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleClose}>Закрыть</Button>
+          <Button variant="success" onClick={handleClose}>{t("close")}</Button>
         </Modal.Footer>
       </>
 

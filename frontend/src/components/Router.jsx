@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes, Navigate, Link } from "react-router-dom";
 import routes from "../routes/routes.js"
+import { ToastContainer, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import LoginPage from "./Pages/LoginPage.jsx"
 import MainPage from "./Pages/MainPage.jsx"
@@ -14,18 +16,15 @@ import { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from "react-bootstrap/Navbar";
 
-import { VantaBackground } from "./VantaBackground";
-
 const Router = () => {
 
   const authContext = useContext(AuthContext);
 
   return (
     <BrowserRouter>
-      {/* <VantaBackground> */}
       <div
         className="d-flex flex-column h-100 my-bg">
-        <Navbar expand="lg" className="bg-body-tertiary shadow-sm opacity-75">
+        <Navbar expand="lg" className="bg-body-tertiary shadow-sm">
           <Container>
               <Link className='navbar-brand' to="/">Hexlet Chat</Link>
               {authContext.isLoggedIn() ? <LogOutButton /> : <></>}
@@ -37,8 +36,20 @@ const Router = () => {
           <Route path={routes.signup} element={<RegistrationPage />} />
           <Route path={routes.main} element={authContext.isLoggedIn() ? <MainPage /> : <Navigate replace to={routes.login} />} />
         </Routes>
+        <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rt1={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Slide}
+      />
         </div>
-      {/* </VantaBackground> */}
     </BrowserRouter>
   )
 }

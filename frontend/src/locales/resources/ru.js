@@ -1,22 +1,30 @@
 export default {
     translation: {
-        header: 'RSS агрегатор',
-        starting_phrase: 'Начните читать RSS сегодня! Это легко, это красиво.',
-        link: 'Ссылка RSS',
-        add: 'Добавить',
-        example: 'Пример: https://lorem-rss.hexlet.app/feed',
-        created_by: 'сделано',
+        notFoundAlertTitle: "404 Not Found",
+        notFoundAlertText: "Страница не существует",
 
-        invalid_url: 'Ссылка должна быть валидным URL',
-        already_added_url: 'RSS уже существует',
-        success_message: 'RSS успешно загружен',
-        empty_input: 'Не должно быть пустым',
-        invalid_rss_url: 'Ресурс не содержит валидный RSS',
-        view: 'Просмотр',
-        network_error: 'Ошибка сети',
+        rename: "Переименовать",
+        delete: "Удалить",
+        send: "Отправить",
+        login: "Войти",
+        logout: "Выйти",
+        confirm: "Подтвердить",
+        close: "Закрыть",
+        cancel: "Отмена",
+        sure: "Вы уверены?",
 
-        posts: 'Посты',
-        feeds: 'Фиды',
+        channels: "Каналы",
+        messagesCount: "количество сообщений: ",
+
+        noRegistrationData: "Нет аккаунта? ",
+        signUp: "Зарегистрироваться",
+
+        createNewChannelName: "Придумайте название канала",
+        createNewChannel: "Создать новый канал",
+        newChannelName: "Новое название канала",
+        renameChannel: "Переименовать канал",
+        deleteChannel: "Удалить канал",
+        manageChannel: "Управление каналом",
 
     },
 };

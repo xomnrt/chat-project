@@ -1,22 +1,16 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import en from "./resources/en.js"
-import ru from "./resources/en.js"
+import i18next from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import resources from './resources.js';
 
-const resources = {
-    en,
-    ru,
-}
-
-i18n
+i18next
     .use(initReactI18next)
     .init({
         resources,
-        lng: "ru",
-
+        fallbackLng: 'ru',
         interpolation: {
-            escapeValue: false,
-        }
+            escapeValue: false, // экранирование уже есть в React, поэтому отключаем
+        },
+        debug: true,
     });
 
-export default i18n;
+export default i18next;
