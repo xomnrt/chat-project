@@ -57,12 +57,14 @@ const RegistrationForm = () => {
                 formik.resetForm();
                 navigate("/");
             } catch (e) {
+                console.log(e)
                 if (e instanceof AxiosError && e.status === 409) {
+                    console.log("axios error")
                     formik.setErrors({
-                        username: "Имя пользователя уже занято"
+                        username: "Такой пользователь уже существует",
                     });
                 } else {
-                    console.log(e)
+                    console.log("непонятно")
                 }
 
             }
@@ -91,9 +93,9 @@ const RegistrationForm = () => {
                                             value={formik.values.username}
                                             className={formik.errors.username ? "border border-danger" : ""}
                                         />
-                                        {formik.touched.username && formik.errors.username ? (
-                                            <div className="text-danger">{formik.errors.username}</div>
-                                        ) : <div></div>}
+                                        {(formik.errors.username) ?
+                                        <div className="text-danger">{formik.errors.username}</div> : <div></div>
+                                        }
                                     </Form.Group>
 
                                     <Form.Group className="mb-1" controlId="formPassword">
@@ -106,7 +108,7 @@ const RegistrationForm = () => {
                                             value={formik.values.password}
                                         />
 
-                                        {formik.touched.password && formik.errors.password ? (
+                                        {formik.errors.password ? (
                                             <div className="text-danger">{formik.errors.password}</div>
                                         ) : <div></div>}
                                     </Form.Group>
@@ -121,7 +123,7 @@ const RegistrationForm = () => {
                                             value={formik.values.confirmPassword}
                                         />
 
-                                        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                                        {formik.errors.confirmPassword ? (
                                             <div className="text-danger">{formik.errors.confirmPassword}</div>
                                         ) : <div></div>}
                                     </Form.Group>

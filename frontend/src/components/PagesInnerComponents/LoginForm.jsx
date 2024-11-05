@@ -78,7 +78,7 @@ const LoginForm = () => {
                                             value={formik.values.username}
                                             className={formik.errors.username ? "border border-danger" : ""}
                                         />
-                                        {formik.touched.username && formik.errors.username ? (
+                                        {formik.errors.username ? (
                                             <div className="text-danger">{formik.errors.username}</div>
                                         ) : <div></div>}
                                     </Form.Group>
@@ -93,7 +93,7 @@ const LoginForm = () => {
                                             value={formik.values.password}
                                         />
 
-                                        {formik.touched.password && formik.errors.password ? (
+                                        {formik.errors.password ? (
                                             <div className="text-danger">{formik.errors.password}</div>
                                         ) : <div></div>}
                                     </Form.Group>

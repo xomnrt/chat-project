@@ -23,6 +23,7 @@ export const AuthProvider = ({children}) => {
 
     const signUp = async (username, password) => {
         const response = await axios.post(signUpPath, { username, password });
+        console.log(response.status)
         saveUserData(response.data)
     }
 

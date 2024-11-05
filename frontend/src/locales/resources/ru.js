@@ -17,7 +17,7 @@ export default {
         messagesCount: "количество сообщений: ",
 
         noRegistrationData: "Нет аккаунта? ",
-        signUp: "Зарегистрироваться",
+        signUp: "Регистрация",
 
         createNewChannelName: "Придумайте название канала",
         createNewChannel: "Создать новый канал",
