@@ -55,7 +55,7 @@ const RenameChannelForm = ({handleClose, channel}) => {
                                     <Form.Control
                                         name="newChannelName"
                                         type="text"
-                                        placeholder="Введите новое название канала"
+                                        placeholder={t("newChannelName")}
                                         onChange={formik.handleChange}
                                         value={formik.values.newChannelName}
                                         className={formik.errors.newChannelName ? "border border-danger" : ""}

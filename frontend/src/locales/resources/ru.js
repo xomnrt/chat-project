@@ -19,9 +19,9 @@ export default {
         noRegistrationData: "Нет аккаунта? ",
         signUp: "Регистрация",
 
-        createNewChannelName: "Придумайте название канала",
+        createNewChannelName: "Придумайте имя канала",
         createNewChannel: "Создать новый канал",
-        newChannelName: "Новое название канала",
+        newChannelName: "Новое имя канала",
         renameChannel: "Переименовать канал",
         deleteChannel: "Удалить канал",
         manageChannel: "Управление каналом",
