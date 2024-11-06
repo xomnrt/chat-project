@@ -33,10 +33,9 @@ export const ChatApiProvider = ({socket, children }) => {
         socket.emit('newMessage', message, (response) => console.log(`response status for message sending: ${response.status}`));
     }
 
-    const addNewChannel = (channel) => {
-        socket.emit('newChannel', channel, (response) => console.log(`response status for channel creation: ${response.status}`, response));
-
-        toast("Канал создан!");
+    const addNewChannel = async (channel) => {
+        const response =  await socket.emitWithAck('newChannel', channel);
+        return response.data;
     }
 
     const deleteChannel = (channel) => {
@@ -58,8 +57,7 @@ export const ChatApiProvider = ({socket, children }) => {
           });
 
         socket.on("newChannel", (channel) => {
-            dispatch(ChannelsActions.addChannel(channel))
-
+            dispatch(ChannelsActions.addChannel(channel));
         })
 
         socket.on("removeChannel", (channel) => {
