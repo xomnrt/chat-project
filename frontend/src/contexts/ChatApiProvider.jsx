@@ -41,7 +41,7 @@ export const ChatApiProvider = ({socket, children }) => {
 
     const deleteChannel = (channel) => {
         socket.emit('removeChannel', channel, (response) => console.log(`response status for channel deletion: ${response.status}`));
-        toast(`Канал удален`);
+        toast(`Канал удалён`);
     }
 
     const renameChannel = (channel) => {
