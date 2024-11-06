@@ -84,9 +84,10 @@ const Channel = ({channel}) => {
     return (
         <Dropdown as={ButtonGroup} className="w-100 mb-2">
             <Button
-            onClick={changeCurrentActiveChannel}
-            variant={currentVariant}
-            className="w-100"
+                onClick={changeCurrentActiveChannel}
+                variant={currentVariant}
+                className="w-100"
+                name={censorship.clean(channel.name)}
             >
                 # {censorship.clean(channel.name)}
                 {channel.removable ? "" : <LockedIcon></LockedIcon>}
