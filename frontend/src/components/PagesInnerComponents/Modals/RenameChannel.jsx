@@ -14,7 +14,6 @@ import { selectChannels } from "../../../slices/channelsSlice.js";
 import { ChatApiContext } from '../../../contexts/ChatApiProvider.jsx';
 import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormControl } from 'react-bootstrap';
 
 const RenameChannelForm = ({handleClose, channel}) => {
 
