@@ -87,6 +87,7 @@ const Channel = ({channel}) => {
                 onClick={changeCurrentActiveChannel}
                 variant={currentVariant}
                 className="w-100"
+                aria-label={censorship.clean(channel.name)}
             >
                 # {censorship.clean(channel.name)}
                 {channel.removable ? "" : <LockedIcon></LockedIcon>}
