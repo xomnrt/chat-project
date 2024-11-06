@@ -62,7 +62,7 @@ const NewChannelNameForm = () => {
                                     <Form.Control
                                         name="newChannelName"
                                         type="text"
-                                        placeholder={t("createNewChannelName")}
+                                        placeholder={t("createNewChannelNamePlaceholder")}
                                         onChange={formik.handleChange}
                                         value={formik.values.newChannelName}
                                         className={formik.errors.newChannelName ? "border border-danger" : ""}

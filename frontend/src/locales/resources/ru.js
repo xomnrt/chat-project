@@ -19,12 +19,12 @@ export default {
         noRegistrationData: "Нет аккаунта? ",
         signUp: "Регистрация",
 
-        createNewChannelName: "Придумайте имя канала",
+        createNewChannelName: "Придумайте название",
+        createNewChannelNamePlaceholder: "Введите имя канала",
         createNewChannel: "Создать новый канал",
         newChannelName: "Новое имя канала",
         renameChannel: "Переименовать канал",
         deleteChannel: "Удалить канал",
         manageChannel: "Управление каналом",
-
     },
 };

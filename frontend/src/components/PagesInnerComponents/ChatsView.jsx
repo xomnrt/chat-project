@@ -87,10 +87,9 @@ const Channel = ({channel}) => {
                 onClick={changeCurrentActiveChannel}
                 variant={currentVariant}
                 className="w-100"
-                aria-label={censorship.clean(channel.name)}
             >
                 # {censorship.clean(channel.name)}
-                {channel.removable ? "" : <LockedIcon></LockedIcon>}
+                {channel.removable ? <></> : <LockedIcon></LockedIcon>}
             </Button>
 
             {channel.removable ?
@@ -101,7 +100,7 @@ const Channel = ({channel}) => {
                <Dropdown.Item onClick={handleRenameChannel}>{t("rename")}</Dropdown.Item>
                <Dropdown.Item onClick={handleDeleteChannel}>{t("delete")}</Dropdown.Item>
              </Dropdown.Menu>
-            </Dropdown.Toggle> : ""}
+            </Dropdown.Toggle> : <></>}
 
         </Dropdown>
     )

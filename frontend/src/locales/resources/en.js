@@ -20,6 +20,7 @@ export default {
         signUp: "Sign Up",
 
         createNewChannelName: "Create new channel name",
+        createNewChannelNamePlaceholder: "Введите имя канала",
         createNewChannel: "Create new channel",
         newChannelName: "New channel name",
         renameChannel: "Rename channel",
