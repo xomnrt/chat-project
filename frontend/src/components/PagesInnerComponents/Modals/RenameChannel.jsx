@@ -12,13 +12,22 @@ import { useSelector} from "react-redux";
 
 import { selectChannels } from "../../../slices/channelsSlice.js";
 import { ChatApiContext } from '../../../contexts/ChatApiProvider.jsx';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FormControl } from 'react-bootstrap';
 
 const RenameChannelForm = ({handleClose, channel}) => {
 
     const alreadyUsedChannelNames = useSelector(selectChannels).map((channel) => channel.name);
     const chatContext = useContext(ChatApiContext);
+
+    const input = useRef(null);
+
+    useEffect(() => {
+      input.current.focus();
+      input.current.select();
+    }, []);
+
 
     const formik = useFormik({
         initialValues: {
@@ -51,8 +60,10 @@ const RenameChannelForm = ({handleClose, channel}) => {
                         <Form onSubmit={formik.handleSubmit}>
                             <Stack gap={1} >
                                 <h4 className="text-center mt-1 mb-3">{t("newChannelName")}</h4>
-                                    <Form.Label></Form.Label>
+                                <Form.Group controlId='name'>
+                                    <Form.Label visuallyHidden>{t("newChannelName")}</Form.Label>
                                     <Form.Control
+                                        ref={input}
                                         name="newChannelName"
                                         type="text"
                                         placeholder={t("newChannelName")}
@@ -60,9 +71,10 @@ const RenameChannelForm = ({handleClose, channel}) => {
                                         value={formik.values.newChannelName}
                                         className={formik.errors.newChannelName ? "border border-danger" : ""}
                                     />
-                                    {formik.touched.newChannelName && formik.errors.newChannelName ? (
-                                        <div className="text-danger">{formik.errors.newChannelName}</div>
-                                    ) : <div></div>}
+                                </Form.Group>
+                                {formik.touched.newChannelName && formik.errors.newChannelName ? (
+                                    <div className="text-danger">{formik.errors.newChannelName}</div>
+                                ) : <div></div>}
 
                                 <div className="mx-auto mb-3 mt-3">
                                     <Button variant="success" type="submit" className="btn-lg">{t("confirm")}</Button>
