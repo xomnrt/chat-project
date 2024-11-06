@@ -36,12 +36,12 @@ export const ChatApiProvider = ({socket, children }) => {
     const addNewChannel = (channel) => {
         socket.emit('newChannel', channel, (response) => console.log(`response status for channel creation: ${response.status}`, response));
 
-        toast("Канал успешно создан!");
+        toast("Канал создан!");
     }
 
     const deleteChannel = (channel) => {
         socket.emit('removeChannel', channel, (response) => console.log(`response status for channel deletion: ${response.status}`));
-        toast(`Канал ${channel.name} удален`);
+        toast(`Канал удален`);
     }
 
     const renameChannel = (channel) => {
