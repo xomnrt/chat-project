@@ -1,4 +1,4 @@
-import en from "./resources/en.js"
-import ru from "./resources/ru.js"
+import en from './resources/en.js';
+import ru from './resources/ru.js';
 
-export default { ru, en }
+export default { ru, en };

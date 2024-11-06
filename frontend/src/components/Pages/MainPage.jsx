@@ -1,9 +1,7 @@
-import ChatsView from '../PagesInnerComponents/ChatsView.jsx'
+import ChatsView from '../PagesInnerComponents/ChatsView.jsx';
 
-const MainPage = () => {
-    return (
-            <ChatsView></ChatsView>
-        )
-}
+const MainPage = () => (
+  <ChatsView />
+);
 
 export default MainPage;

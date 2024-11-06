@@ -1,9 +1,7 @@
-import RegistrationForm from "../PagesInnerComponents/RegistrationForm.jsx"
+import RegistrationForm from '../PagesInnerComponents/RegistrationForm.jsx';
 
-const RegistrationPage = () => {
-    return (
-            <RegistrationForm />
-    )
-}
+const RegistrationPage = () => (
+  <RegistrationForm />
+);
 
 export default RegistrationPage;

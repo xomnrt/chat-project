@@ -1,9 +1,7 @@
-import LoginForm from "../PagesInnerComponents/LoginForm.jsx"
+import LoginForm from '../PagesInnerComponents/LoginForm.jsx';
 
-const LoginPage = () => {
-    return (
-            <LoginForm />
-    )
-}
+const LoginPage = () => (
+  <LoginForm />
+);
 
 export default LoginPage;
