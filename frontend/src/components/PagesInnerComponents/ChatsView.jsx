@@ -261,6 +261,9 @@ const SendMessageForm = () => {
 
 
 const MessagesView = () => {
+
+    const censorship = LeoProfanity;
+
     const {t} = useTranslation();
     const currentChannel = useSelector(selectCurrentChannel);
     const messages = useSelector(selectMessages);
@@ -271,7 +274,7 @@ const MessagesView = () => {
                     <div className="d-flex flex-column h-100">
                         <div className="bg-light mb-4 p-3 shadow-sm small">
                             <p className="m-0">
-                                <b>{currentChannel?.name}</b>
+                                <b>{censorship.clean(currentChannel?.name)}</b>
                             </p>
                             <span className="text-muted">{t("messagesCount")}{messagesForCurrentChannel.length}</span>
                         </div>
