@@ -35,9 +35,12 @@ const Router = () => {
           <Route path="*" element={<NotFoundPage />} />
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.signup} element={<RegistrationPage />} />
-          <Route path={routes.main} element={
-            authContext.isLoggedIn() ? < MainPage /> : <Navigate replace to={routes.login} />
-          } />
+          <Route path={routes.main}
+            element={authContext.isLoggedIn() ?
+              <MainPage /> :
+              <Navigate replace to={routes.login} />
+            }
+          />
         </Routes>
         <ToastContainer
           position="top-right"

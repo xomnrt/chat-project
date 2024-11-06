@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       isLoggedIn: () => !!userData,
       logOut,
       userData,
-    }
+    };
   }, [userData, setUserData]);
 
   return (
