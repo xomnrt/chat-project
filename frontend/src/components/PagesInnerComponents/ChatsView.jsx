@@ -83,20 +83,18 @@ const Channel = ({ channel }) => {
       >
         <span className="me-1">#</span>
         {censorship.clean(channel.name)}
-        {channel.removable ? <></> : <LockedIcon />}
+        {channel.removable && <LockedIcon />}
       </Button>
 
-      {channel.removable
-
-        ? (
-          <Dropdown.Toggle split variant={currentVariant} id="dropdown-split-basic" className="rounded-0">
-            <span className="visually-hidden">{t('manageChannel')}</span>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={handleRenameChannel}>{t('rename')}</Dropdown.Item>
-              <Dropdown.Item onClick={handleDeleteChannel}>{t('delete')}</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown.Toggle>
-        ) : <></>}
+      {channel.removable && (
+        <Dropdown.Toggle split variant={currentVariant} id="dropdown-split-basic" className="rounded-0">
+          <span className="visually-hidden">{t('manageChannel')}</span>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={handleRenameChannel}>{t('rename')}</Dropdown.Item>
+            <Dropdown.Item onClick={handleDeleteChannel}>{t('delete')}</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown.Toggle>
+      )}
 
     </Dropdown>
   );
@@ -226,6 +224,8 @@ const SendMessageForm = () => {
 
       <Form onSubmit={formik.handleSubmit}>
         <InputGroup className="mb-3" size="lg">
+          {/* <Form.Group controlId='body'>
+            <Form.Label visuallyHidden>Новое сообщение</Form.Label> */}
           <Form.Control
             name="body"
             type="text"
@@ -236,6 +236,8 @@ const SendMessageForm = () => {
             className="py-1 border rounded-2"
             aria-describedby="basic-addon2"
           />
+          {/* </Form.Group> */}
+
 
           <Button variant="outline-success" id="button-addon2" type="submit">
             <b>{t('send')}</b>
@@ -252,7 +254,9 @@ const MessagesView = () => {
   const { t } = useTranslation();
   const currentChannel = useSelector(selectCurrentChannel);
   const messages = useSelector(selectMessages);
-  const messagesForCurrentChannel = messages.filter((message) => message.channelId === currentChannel.id);
+  const messagesForCurrentChannel = messages.filter(message =>
+    message.channelId === currentChannel.id
+  );
 
   return (
     <div className="col p-0 h-100">

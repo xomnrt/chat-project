@@ -16,7 +16,7 @@ import { selectChannels } from '../../../slices/channelsSlice.js';
 import { ChatApiContext } from '../../../contexts/ChatApiProvider.jsx';
 
 const RenameChannelForm = ({ handleClose, channel }) => {
-  const alreadyUsedChannelNames = useSelector(selectChannels).map((channel) => channel.name);
+  const alreadyUsedChannelNames = useSelector(selectChannels).map((c) => c.name);
   const chatContext = useContext(ChatApiContext);
 
   const input = useRef(null);
@@ -81,7 +81,7 @@ const RenameChannelForm = ({ handleClose, channel }) => {
   );
 };
 
-const RenameChannelModal = (props) => {
+const RenameChannelModal = ({ handleClose, additionalProps: { channel } }) => {
   const { t } = useTranslation();
 
   return (
@@ -91,11 +91,11 @@ const RenameChannelModal = (props) => {
       </Modal.Header>
       <Modal.Body>
 
-        <RenameChannelForm handleClose={props.handleClose} channel={props.channel} />
+        <RenameChannelForm handleClose={handleClose} channel={channel} />
 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={props.handleClose}>{t('close')}</Button>
+        <Button variant="success" onClick={handleClose}>{t('close')}</Button>
       </Modal.Footer>
     </>
 

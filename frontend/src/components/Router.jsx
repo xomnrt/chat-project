@@ -28,14 +28,16 @@ const Router = () => {
         <Navbar expand="lg" className="bg-body-tertiary shadow-sm">
           <Container>
             <Link className="navbar-brand" to="/">Hexlet Chat</Link>
-            {authContext.isLoggedIn() ? <LogOutButton /> : <></>}
+            {authContext.isLoggedIn() && <LogOutButton />}
           </Container>
         </Navbar>
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
           <Route path={routes.login} element={<LoginPage />} />
           <Route path={routes.signup} element={<RegistrationPage />} />
-          <Route path={routes.main} element={authContext.isLoggedIn() ? <MainPage /> : <Navigate replace to={routes.login} />} />
+          <Route path={routes.main} element={
+            authContext.isLoggedIn() ? < MainPage /> : <Navigate replace to={routes.login} />
+          } />
         </Routes>
         <ToastContainer
           position="top-right"

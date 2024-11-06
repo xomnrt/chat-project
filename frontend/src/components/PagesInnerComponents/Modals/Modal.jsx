@@ -31,7 +31,7 @@ const ModalWindow = () => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      {ModalVariant && <ModalVariant handleClose={handleClose} {...modalProps} />}
+      {ModalVariant && <ModalVariant handleClose={handleClose} additionalProps={modalProps} />}
     </Modal>
   );
 };

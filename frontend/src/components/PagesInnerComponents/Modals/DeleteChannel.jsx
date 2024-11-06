@@ -43,7 +43,7 @@ const DeleteChannelForm = ({ handleClose, channel }) => {
   );
 };
 
-const DeleteChannelModal = (props) => {
+const DeleteChannelModal = ({ handleClose, additionalProps: { channel } }) => {
   const { t } = useTranslation();
 
   return (
@@ -53,11 +53,11 @@ const DeleteChannelModal = (props) => {
       </Modal.Header>
       <Modal.Body>
 
-        <DeleteChannelForm handleClose={props.handleClose} channel={props.channel} />
+        <DeleteChannelForm handleClose={handleClose} channel={channel} />
 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={props.handleClose}>{t('close')}</Button>
+        <Button variant="success" onClick={handleClose}>{t('close')}</Button>
       </Modal.Footer>
     </>
 

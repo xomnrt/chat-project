@@ -80,45 +80,45 @@ const RegistrationForm = () => {
                   <Form.Group className="mb-1" controlId="formUsername">
                     <Form.Label>Имя пользователя</Form.Label>
                     <Form.Control
-                        name="username"
-                        type="text"
-                        placeholder="Имя пользователя"
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                        className={formik.errors.username ? 'border border-danger' : ''}
-                      />
+                      name="username"
+                      type="text"
+                      placeholder="Имя пользователя"
+                      onChange={formik.handleChange}
+                      value={formik.values.username}
+                      className={formik.errors.username ? 'border border-danger' : ''}
+                    />
                     {formik.errors.username
-                        ? <div className="text-danger">{formik.errors.username}</div> : <div />}
+                      ? <div className="text-danger">{formik.errors.username}</div> : <div />}
                   </Form.Group>
 
                   <Form.Group className="mb-1" controlId="formPassword">
                     <Form.Label>Пароль</Form.Label>
                     <Form.Control
-                        name="password"
-                        type="password"
-                        placeholder="Пароль"
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                      />
+                      name="password"
+                      type="password"
+                      placeholder="Пароль"
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                    />
 
                     {formik.errors.password ? (
-                        <div className="text-danger">{formik.errors.password}</div>
-                      ) : <div />}
+                      <div className="text-danger">{formik.errors.password}</div>
+                    ) : <div />}
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formConfirmPassword">
                     <Form.Label>Подтвердите пароль</Form.Label>
                     <Form.Control
-                        name="confirmPassword"
-                        type="password"
-                        placeholder="Повторите пароль"
-                        onChange={formik.handleChange}
-                        value={formik.values.confirmPassword}
-                      />
+                      name="confirmPassword"
+                      type="password"
+                      placeholder="Повторите пароль"
+                      onChange={formik.handleChange}
+                      value={formik.values.confirmPassword}
+                    />
 
                     {formik.errors.confirmPassword ? (
-                        <div className="text-danger">{formik.errors.confirmPassword}</div>
-                      ) : <div />}
+                      <div className="text-danger">{formik.errors.confirmPassword}</div>
+                    ) : <div />}
                   </Form.Group>
 
                   <div className="mx-auto mb-3 mt-1">
