@@ -249,7 +249,7 @@ const MessagesView = () => {
   const currentChannel = useSelector(selectCurrentChannel);
   const messages = useSelector(selectMessages);
   const messagesForCurrentChannel = messages.filter(
-    (message) => message.channelId === currentChannel.id
+    (message) => message.channelId === currentChannel.id,
   );
 
   return (
