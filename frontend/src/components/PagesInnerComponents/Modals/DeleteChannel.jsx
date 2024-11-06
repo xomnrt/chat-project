@@ -33,8 +33,8 @@ const DeleteChannelForm = ({handleClose, channel}) => {
                             <Stack gap={1} >
                                 <h4 className="text-center mt-1 mb-3">{t("sure")}</h4>
                                 <div className="mx-auto mb-3 mt-3">
-                                    <Button variant="success" type="submit" className="btn-lg mx-2" onClick={deleteChannel}>{t("confirm")}</Button>
-                                    <Button variant="danger" type="submit" className="btn-lg mx-2" onClick={handleClose}>{t("cancel")}</Button>
+                                    <Button variant="danger" type="submit" className="btn-lg mx-2" onClick={deleteChannel}>{t("confirm")}</Button>
+                                    <Button variant="success" type="submit" className="btn-lg mx-2" onClick={handleClose}>{t("cancel")}</Button>
                                 </div>
                             </Stack>
             </div>
