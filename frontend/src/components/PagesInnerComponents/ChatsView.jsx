@@ -69,7 +69,7 @@ const Channel = ({channel}) => {
         dispatch(ChannelsActions.setCurrentChannelId(channel.id));
     }, [channel.id, dispatch])
 
-    const currentVariant = currentChannelId === channel.id ? "success" : "outline-success";
+    const currentVariant = currentChannelId === channel.id ? "btn-secondary" : "outline-secondary";
 
     const handleRenameChannel = () => {
         dispatch(modalActions.setCurrentModalType({type: "RenameChannelModal", props: {channel}}));
@@ -86,7 +86,7 @@ const Channel = ({channel}) => {
             <Button
                 onClick={changeCurrentActiveChannel}
                 variant={currentVariant}
-                className="w-100"
+                className="w-100 rounded-0 text-start text-truncate btn"
             >
                 # {censorship.clean(channel.name)}
                 {channel.removable ? <></> : <LockedIcon></LockedIcon>}
