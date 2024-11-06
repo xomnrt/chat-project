@@ -59,7 +59,6 @@ const RenameChannelForm = ({handleClose, channel}) => {
             <div className="col-12 col-md-8 col-xxl-6">
                         <Form onSubmit={formik.handleSubmit}>
                             <Stack gap={1} >
-                                {/* <h4 className="text-center mt-1 mb-3">{t("newChannelName")}</h4> */}
                                 <Form.Group controlId='name'>
                                     <Form.Label visuallyHidden>{t("newChannelName")}</Form.Label>
                                     <Form.Control
