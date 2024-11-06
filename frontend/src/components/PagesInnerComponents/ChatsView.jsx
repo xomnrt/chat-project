@@ -88,7 +88,7 @@ const Channel = ({channel}) => {
                 variant={currentVariant}
                 className="w-100 rounded-0 text-start text-truncate"
             >
-                # {censorship.clean(channel.name)}
+                <span className="me-1">#</span>{censorship.clean(channel.name)}
                 {channel.removable ? <></> : <LockedIcon></LockedIcon>}
             </Button>
 
