@@ -16,7 +16,9 @@ import { ChatApiContext } from '../../../contexts/ChatApiProvider.jsx';
 import { useContext, useEffect, useRef } from 'react';
 
 import { actions as modalActions } from "../../../slices/modalSlice.js";
+import { actions as channelActions } from "../../../slices/channelsSlice.js";
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 
 const NewChannelNameForm = () => {
@@ -44,16 +46,16 @@ const NewChannelNameForm = () => {
               .notOneOf(alreadyUsedChannelNames, "Название канала уже используется")
               .required('Необходимо ввести название канала'),
           }),
-        onSubmit: values => {
+        onSubmit: async (values) => {
 
-          chatContext.addNewChannel(
-            {
-              name: values.newChannelName,
-              id: _.uniqueId,
-              removable: true
-            });
+          const newChannel = await chatContext.addNewChannel({name: values.newChannelName});
+
           formik.resetForm();
+
           dispatch(modalActions.toggleIsOpen())
+          dispatch(channelActions.setCurrentChannelId(newChannel.id));
+
+          toast("Канал создан!");
         },
       });
 
