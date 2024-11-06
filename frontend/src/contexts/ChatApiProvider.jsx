@@ -34,7 +34,7 @@ export const ChatApiProvider = ({socket, children }) => {
     }
 
     const addNewChannel = async (channel) => {
-        const response =  await socket.emitWithAck('newChannel', channel);
+        const response = await socket.emitWithAck('newChannel', channel);
         return response.data;
     }
 

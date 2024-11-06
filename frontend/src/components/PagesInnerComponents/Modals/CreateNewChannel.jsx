@@ -40,18 +40,19 @@ const NewChannelNameForm = () => {
         },
         validationSchema: object({
             newChannelName: string()
-              .max(20, 'Название должно содержать от 3 до 20 символов')
-              .min(3, "Название должно содержать от 3 до 20 символов")
-              .notOneOf(alreadyUsedChannelNames, "Название канала уже используется")
-              .required('Необходимо ввести название канала'),
-          }),
+                .max(20, 'Название должно содержать от 3 до 20 символов')
+                .min(3, "Название должно содержать от 3 до 20 символов")
+                .notOneOf(alreadyUsedChannelNames, "Название канала уже используется")
+                .required('Необходимо ввести название канала'),
+        }),
         onSubmit: async (values) => {
 
           const newChannel = await chatContext.addNewChannel({name: values.newChannelName});
 
           formik.resetForm();
 
-          dispatch(modalActions.toggleIsOpen())
+          dispatch(modalActions.toggleIsOpen());
+          dispatch(channelActions.addChannel(newChannel));
           dispatch(channelActions.setCurrentChannelId(newChannel.id));
 
           toast("Канал создан!");
