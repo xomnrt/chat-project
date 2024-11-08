@@ -22,8 +22,8 @@ const validate = (values) => {
 
   if (!values.password) {
     errors.password = i18next.t('errors.noPassword');
-  } else if (values.password.length <= 6) {
-    errors.password = i18next.t('errors.passwordRequirements');
+  } else if (values.password.length <= 3) {
+    errors.password = i18next.t('errors.passwordMinRequirements');
   }
 
   return errors;

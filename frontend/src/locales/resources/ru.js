@@ -13,8 +13,10 @@ export default {
       noUsername: 'Необходимо ввести имя пользователя',
       noPassword: 'Необходимо ввести пароль',
       passwordRequirements: 'Пароль должен содержать не менее 6 символов',
+      passwordMinRequirements: 'Пароль должен содержать от 3 до 20 символов',
       usernameRequirements: 'Имя пользователя должно быть от 3 до 20 символов',
       channelNameRequirements: 'Название должно содержать от 3 до 20 символов',
+
       wrongLoginData: 'Неверные имя пользователя или пароль',
       noPasswordConfirmation: 'Подтвердите пароль',
       noPasswordMatching: 'Пароли должны совпадать',
