@@ -110,8 +110,8 @@ const SendMessageForm = () => {
           <Form.Control
             name="body"
             type="text"
-            aria-label={t('inteface.newMessage')}
-            placeholder={t('inteface.newMessagePlaceholder')}
+            aria-label={t('interface.newMessage')}
+            placeholder={t('interface.newMessagePlaceholder')}
             onChange={formik.handleChange}
             value={formik.values.body}
             className="py-1 border rounded-2"
