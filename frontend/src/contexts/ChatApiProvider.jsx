@@ -1,7 +1,6 @@
 import { createContext, useContext, useMemo } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
 import { AuthContext } from './AuthProvider.jsx';
 import { actions as MessageActions } from '../slices/messagesSlice.js';
 import { actions as ChannelsActions } from '../slices/channelsSlice.js';
