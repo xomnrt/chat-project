@@ -12,12 +12,14 @@ import { useSelector } from 'react-redux';
 
 import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { selectChannels } from '../../../slices/channelsSlice.js';
 import { ChatApiContext } from '../../../contexts/ChatApiProvider.jsx';
 
 const RenameChannelForm = ({ handleClose, channel }) => {
   const alreadyUsedChannelNames = useSelector(selectChannels).map((c) => c.name);
   const chatContext = useContext(ChatApiContext);
+  const { t } = useTranslation();
 
   const input = useRef(null);
 
@@ -32,21 +34,19 @@ const RenameChannelForm = ({ handleClose, channel }) => {
     },
     validationSchema: object({
       newChannelName: string()
-        .max(20, 'Название должно содержать не более 20 символов')
-        .min(3, 'Название должно содержать не менее 3 символов')
-        .notOneOf(alreadyUsedChannelNames, 'Название канала уже используется')
-        .required('Необходимо ввести название канала'),
+        .max(20, t('errors.channelNameRequirements'))
+        .min(3, t('errors.channelNameRequirements'))
+        .notOneOf(alreadyUsedChannelNames, t('errors.channelNameAlreadyInUse'))
+        .required(t('errors.noChannelName')),
     }),
     onSubmit: (values) => {
-      // передать ченл с новым именем
       const channelWithNewName = { ...channel, name: values.newChannelName };
       chatContext.renameChannel(channelWithNewName);
+      toast(t('toasts.renameChannelAlert'));
       handleClose();
       formik.resetForm();
     },
   });
-
-  const { t } = useTranslation();
 
   return (
     <Container fluid className="h-100">
@@ -55,12 +55,12 @@ const RenameChannelForm = ({ handleClose, channel }) => {
           <Form onSubmit={formik.handleSubmit}>
             <Stack gap={1}>
               <Form.Group controlId="name">
-                <Form.Label visuallyHidden>{t('newChannelName')}</Form.Label>
+                <Form.Label visuallyHidden>{t('interface.newChannelName')}</Form.Label>
                 <Form.Control
                   ref={input}
                   name="newChannelName"
                   type="text"
-                  placeholder={t('newChannelName')}
+                  placeholder={t('interface.newChannelName')}
                   onChange={formik.handleChange}
                   value={formik.values.newChannelName}
                   className={formik.errors.newChannelName ? 'border border-danger' : ''}
@@ -71,7 +71,7 @@ const RenameChannelForm = ({ handleClose, channel }) => {
               ) : <div />}
 
               <div className="mx-auto mb-3 mt-3">
-                <Button variant="success" type="submit" className="btn-lg">{t('confirm')}</Button>
+                <Button variant="success" type="submit" className="btn-lg">{t('interface.confirm')}</Button>
               </div>
             </Stack>
           </Form>
@@ -87,7 +87,7 @@ const RenameChannelModal = ({ handleClose, additionalProps: { channel } }) => {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">{t('renameChannel')}</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{t('interface.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
 
@@ -95,7 +95,7 @@ const RenameChannelModal = ({ handleClose, additionalProps: { channel } }) => {
 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={handleClose}>{t('close')}</Button>
+        <Button variant="success" onClick={handleClose}>{t('interface.close')}</Button>
       </Modal.Footer>
     </>
 

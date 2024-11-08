@@ -8,7 +8,7 @@ i18next
     resources,
     fallbackLng: 'ru',
     interpolation: {
-      escapeValue: false, // экранирование уже есть в React, поэтому отключаем
+      escapeValue: false,
     },
     debug: true,
   });

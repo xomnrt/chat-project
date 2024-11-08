@@ -10,19 +10,20 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const validate = (values) => {
   const errors = {};
 
   if (!values.username) {
-    errors.username = 'Необходимо ввести имя пользователя';
+    errors.username = i18next.t('errors.noUsername');
   }
 
   if (!values.password) {
-    errors.password = 'Необходимо ввести пароль';
-  } else if (values.password.length <= 3) {
-    errors.password = 'Пароль должен содержать от 3 до 20 символов';
+    errors.password = i18next.t('errors.noPassword');
+  } else if (values.password.length <= 6) {
+    errors.password = i18next.t('errors.passwordRequirements');
   }
 
   return errors;
@@ -47,7 +48,7 @@ const LoginForm = () => {
       } catch (e) {
         if (e instanceof AxiosError && e.status === 401) {
           formik.setErrors({
-            password: 'Неверные имя пользователя или пароль',
+            password: i18next.t('errors.wrongLoginData'),
           });
         } else {
           console.log(e);
@@ -66,13 +67,13 @@ const LoginForm = () => {
             <Card.Body className="mx-auto row p-5">
               <Form onSubmit={formik.handleSubmit}>
                 <Stack gap={3}>
-                  <h1 className="text-center mb-4">{t('login')}</h1>
+                  <h1 className="text-center mb-4">{t('interface.login')}</h1>
                   <Form.Group className="mb-1" controlId="formUsername">
-                    <Form.Label>Ваш ник</Form.Label>
+                    <Form.Label>{t('interface.nickname')}</Form.Label>
                     <Form.Control
                       name="username"
                       type="text"
-                      placeholder="Ваш ник"
+                      placeholder={t('interface.nickname')}
                       onChange={formik.handleChange}
                       value={formik.values.username}
                       className={formik.errors.username ? 'border border-danger' : ''}
@@ -83,11 +84,11 @@ const LoginForm = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formPassword">
-                    <Form.Label>Пароль</Form.Label>
+                    <Form.Label>{t('interface.password')}</Form.Label>
                     <Form.Control
                       name="password"
                       type="password"
-                      placeholder="Пароль"
+                      placeholder={t('interface.password')}
                       onChange={formik.handleChange}
                       value={formik.values.password}
                     />
@@ -98,15 +99,15 @@ const LoginForm = () => {
                   </Form.Group>
 
                   <div className="mx-auto mb-3 mt-1">
-                    <Button variant="success" type="submit" className="btn-lg">{t('login')}</Button>
+                    <Button variant="success" type="submit" className="btn-lg">{t('interface.login')}</Button>
                   </div>
                 </Stack>
 
               </Form>
             </Card.Body>
             <Card.Footer className="text-muted text-center p-4">
-              {t('noRegistrationData')}
-              <Card.Link href="/signup" className="link-underline link-underline-opacity-0 link-success">{t('signUp')}</Card.Link>
+              {t('interface.noRegistrationData')}
+              <Card.Link href="/signup" className="link-underline link-underline-opacity-0 link-success">{t('interface.signUp')}</Card.Link>
             </Card.Footer>
           </Card>
         </div>

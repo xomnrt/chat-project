@@ -24,6 +24,7 @@ const NewChannelNameForm = () => {
   const dispatch = useDispatch();
 
   const input = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     input.current.focus();
@@ -36,10 +37,10 @@ const NewChannelNameForm = () => {
     },
     validationSchema: object({
       newChannelName: string()
-        .max(20, 'Название должно содержать от 3 до 20 символов')
-        .min(3, 'Название должно содержать от 3 до 20 символов')
-        .notOneOf(alreadyUsedChannelNames, 'Название канала уже используется')
-        .required('Необходимо ввести название канала'),
+        .max(20, t('errors.channelNameRequirements'))
+        .min(3, t('errors.channelNameRequirements'))
+        .notOneOf(alreadyUsedChannelNames, t('errors.channelNameAlreadyInUse'))
+        .required(t('errors.noChannelName')),
     }),
     onSubmit: async (values) => {
       const newChannel = await chatContext.addNewChannel({ name: values.newChannelName });
@@ -50,11 +51,9 @@ const NewChannelNameForm = () => {
       dispatch(channelActions.addChannel(newChannel));
       dispatch(channelActions.setCurrentChannelId(newChannel.id));
 
-      toast('Канал создан!');
+      toast(t('toasts.createChannelAlert'));
     },
   });
-
-  const { t } = useTranslation();
 
   return (
     <Container fluid className="h-100">
@@ -62,14 +61,14 @@ const NewChannelNameForm = () => {
         <div className="col-12 col-md-8 col-xxl-6">
           <Form onSubmit={formik.handleSubmit}>
             <Stack gap={1}>
-              <h4 className="text-center mt-1 mb-3">{t('createNewChannelName')}</h4>
+              <h4 className="text-center mt-1 mb-3">{t('interface.createNewChannelName')}</h4>
               <Form.Group controlId="name">
-                <Form.Label visuallyHidden>{t('createNewChannelNamePlaceholder')}</Form.Label>
+                <Form.Label visuallyHidden>{t('interface.createNewChannelNamePlaceholder')}</Form.Label>
                 <Form.Control
                   ref={input}
                   name="newChannelName"
                   type="text"
-                  placeholder={t('createNewChannelNamePlaceholder')}
+                  placeholder={t('interface.createNewChannelNamePlaceholder')}
                   onChange={formik.handleChange}
                   value={formik.values.newChannelName}
                   className={formik.errors.newChannelName ? 'border border-danger' : ''}
@@ -81,7 +80,7 @@ const NewChannelNameForm = () => {
               ) : <div />}
 
               <div className="mx-auto mb-3 mt-3">
-                <Button variant="success" type="submit" className="btn-lg">{t('confirm')}</Button>
+                <Button variant="success" type="submit" className="btn-lg">{t('interface.confirm')}</Button>
               </div>
             </Stack>
           </Form>
@@ -97,7 +96,7 @@ const NewChannelModal = ({ handleClose }) => {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">{t('createNewChannel')}</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{t('interface.createNewChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
 
@@ -105,7 +104,7 @@ const NewChannelModal = ({ handleClose }) => {
 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={handleClose}>{t('close')}</Button>
+        <Button variant="success" onClick={handleClose}>{t('interface.close')}</Button>
       </Modal.Footer>
     </>
 

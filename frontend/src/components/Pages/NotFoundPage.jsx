@@ -13,8 +13,8 @@ const NotFoundPage = () => {
         <div className="col-12 col-md-8 col-xxl-6">
           <Card className="shadow-sm text-center">
             <Card.Body className="mx-auto row p-5">
-              <h1>{t('notFoundAlertTitle')}</h1>
-              <h2>{t('notFoundAlertText')}</h2>
+              <h1>{t('errors.notFoundAlertTitle')}</h1>
+              <h2>{t('errors.notFoundAlertText')}</h2>
             </Card.Body>
           </Card>
         </div>

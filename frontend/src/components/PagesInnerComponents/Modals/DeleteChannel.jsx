@@ -6,11 +6,13 @@ import Button from 'react-bootstrap/Button';
 import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { ChatApiContext } from '../../../contexts/ChatApiProvider';
 import { actions, selectCurrentChannelId } from '../../../slices/channelsSlice';
 
 const DeleteChannelForm = ({ handleClose, channel }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const currentChannelId = useSelector(selectCurrentChannelId);
 
@@ -21,20 +23,19 @@ const DeleteChannelForm = ({ handleClose, channel }) => {
     if (currentChannelId === channel.id) {
       dispatch(actions.setCurrentChannelId(1));
     }
+    toast(t('toasts.deleteChannelAlert'));
     handleClose();
   };
-
-  const { t } = useTranslation();
 
   return (
     <Container fluid className="h-100">
       <Row className="justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
           <Stack gap={1}>
-            <h4 className="text-center mt-1 mb-3">{t('sure')}</h4>
+            <h4 className="text-center mt-1 mb-3">{t('interface.sure')}</h4>
             <div className="mx-auto mb-3 mt-3">
-              <Button variant="danger" type="submit" className="btn-lg mx-2" onClick={deleteChannel}>{t('confirm')}</Button>
-              <Button variant="success" type="submit" className="btn-lg mx-2" onClick={handleClose}>{t('cancel')}</Button>
+              <Button variant="danger" type="submit" className="btn-lg mx-2" onClick={deleteChannel}>{t('interface.confirm')}</Button>
+              <Button variant="success" type="submit" className="btn-lg mx-2" onClick={handleClose}>{t('interface.cancel')}</Button>
             </div>
           </Stack>
         </div>
@@ -49,7 +50,7 @@ const DeleteChannelModal = ({ handleClose, additionalProps: { channel } }) => {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">{t('deleteChannel')}</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{t('interface.deleteChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
 
@@ -57,7 +58,7 @@ const DeleteChannelModal = ({ handleClose, additionalProps: { channel } }) => {
 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={handleClose}>{t('close')}</Button>
+        <Button variant="success" onClick={handleClose}>{t('interface.close')}</Button>
       </Modal.Footer>
     </>
 

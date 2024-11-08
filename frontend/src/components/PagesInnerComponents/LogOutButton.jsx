@@ -8,7 +8,7 @@ const LogOutButton = () => {
   const authContext = useContext(AuthContext);
 
   return (
-    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={authContext.logOut}>{t('logout')}</button>
+    <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={authContext.logOut}>{t('interface.logout')}</button>
   );
 };
 

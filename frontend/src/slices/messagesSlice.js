@@ -12,8 +12,6 @@ const messagesSlice = createSlice({
     setMessagesInfo: (state, action) => ({ ...state, messages: action.payload }),
 
     addMessage: (state, action) => {
-      // добавить проверку что сообщения такого нет
-      // проверять по id
       if (state.messages.find((message) => message.id === action.payload.id) === undefined) {
         state.messages.push(action.payload);
       }

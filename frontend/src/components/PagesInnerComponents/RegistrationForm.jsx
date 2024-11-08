@@ -9,27 +9,28 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import { AuthContext } from '../../contexts/AuthProvider.jsx';
 
 const validate = (values) => {
   const errors = {};
 
   if (!values.username) {
-    errors.username = 'Необходимо ввести имя пользователя';
+    errors.username = i18next.t('errors.noUsername');
   } else if (!(values.username.length > 3 && values.username.length < 20)) {
-    errors.username = 'Имя пользователя должно быть от 3 до 20 символов';
+    errors.username = i18next.t('errors.usernameRequirements');
   }
 
   if (!values.password) {
-    errors.password = 'Необходимо ввести пароль';
+    errors.password = i18next.t('errors.noPassword');
   } else if (values.password.length < 6) {
-    errors.password = 'Пароль должен содержать не менее 6 символов';
+    errors.password = i18next.t('errors.passwordRequirements');
   }
 
   if (!values.confirmPassword) {
-    errors.confirmPassword = 'Подтвердите пароль';
+    errors.confirmPassword = i18next.t('errors.noPasswordConfirmation');
   } else if (values.password !== values.confirmPassword) {
-    errors.confirmPassword = 'Пароли должны совпадать';
+    errors.confirmPassword = i18next.t('errors.noPasswordMatching');
   }
 
   return errors;
@@ -57,10 +58,10 @@ const RegistrationForm = () => {
         if (e instanceof AxiosError && e.status === 409) {
           console.log('axios error');
           formik.setErrors({
-            username: 'Такой пользователь уже существует',
+            username: i18next.t('errors.usernameAlreadyInUse'),
           });
         } else {
-          console.log('непонятно');
+          console.log(e);
         }
       }
     },
@@ -78,11 +79,11 @@ const RegistrationForm = () => {
                 <Stack gap={3}>
                   <h1 className="text-center mb-4">{t('signUp')}</h1>
                   <Form.Group className="mb-1" controlId="formUsername">
-                    <Form.Label>Имя пользователя</Form.Label>
+                    <Form.Label>{t('interface.username')}</Form.Label>
                     <Form.Control
                       name="username"
                       type="text"
-                      placeholder="Имя пользователя"
+                      placeholder={t('interface.username')}
                       onChange={formik.handleChange}
                       value={formik.values.username}
                       className={formik.errors.username ? 'border border-danger' : ''}
@@ -92,11 +93,11 @@ const RegistrationForm = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-1" controlId="formPassword">
-                    <Form.Label>Пароль</Form.Label>
+                    <Form.Label>{t('interface.password')}</Form.Label>
                     <Form.Control
                       name="password"
                       type="password"
-                      placeholder="Пароль"
+                      placeholder={t('interface.password')}
                       onChange={formik.handleChange}
                       value={formik.values.password}
                     />
@@ -107,11 +108,11 @@ const RegistrationForm = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formConfirmPassword">
-                    <Form.Label>Подтвердите пароль</Form.Label>
+                    <Form.Label>{t('interface.passwordConfirmation')}</Form.Label>
                     <Form.Control
                       name="confirmPassword"
                       type="password"
-                      placeholder="Повторите пароль"
+                      placeholder={t('interface.passwordConfirmation')}
                       onChange={formik.handleChange}
                       value={formik.values.confirmPassword}
                     />
@@ -122,7 +123,7 @@ const RegistrationForm = () => {
                   </Form.Group>
 
                   <div className="mx-auto mb-3 mt-1">
-                    <Button variant="success" type="submit" className="btn-lg">{t('signUp')}</Button>
+                    <Button variant="success" type="submit" className="btn-lg">{t('interface.signUp')}</Button>
                   </div>
                 </Stack>
 
