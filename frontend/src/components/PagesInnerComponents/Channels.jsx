@@ -35,7 +35,7 @@ const Channel = ({ channel }) => {
     dispatch(ChannelsActions.setCurrentChannelId(channel.id));
   }, [channel.id, dispatch]);
 
-  const currentVariant = currentChannelId === channel.id ? 'secondary' : 'outline-secondary';
+  const currentVariant = currentChannelId === channel.id ? 'success' : 'outline-success';
 
   const handleRenameChannel = () => {
     dispatch(modalActions.setCurrentModalType({ type: 'RenameChannelModal', props: { channel } }));
@@ -52,7 +52,7 @@ const Channel = ({ channel }) => {
       <Button
         onClick={changeCurrentActiveChannel}
         variant={currentVariant}
-        className="w-100 rounded-0 text-start text-truncate"
+        className="w-100"
       >
         <span className="me-1">#</span>
         {censorship.clean(channel.name)}
@@ -60,7 +60,7 @@ const Channel = ({ channel }) => {
       </Button>
 
       {channel.removable && (
-        <Dropdown.Toggle split variant={currentVariant} id="dropdown-split-basic" className="rounded-0">
+        <Dropdown.Toggle split variant={currentVariant} id="dropdown-split-basic">
           <span className="visually-hidden">{t('interface.manageChannel')}</span>
           <Dropdown.Menu>
             <Dropdown.Item onClick={handleRenameChannel}>{t('interface.rename')}</Dropdown.Item>
@@ -84,6 +84,7 @@ const RenderChannelList = () => {
         </li>
       ))}
     </ul>
+
   );
 };
 
