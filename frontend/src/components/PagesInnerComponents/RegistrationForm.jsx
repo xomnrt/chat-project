@@ -77,7 +77,7 @@ const RegistrationForm = () => {
             <Card.Body className="mx-auto row p-5">
               <Form onSubmit={formik.handleSubmit}>
                 <Stack gap={3}>
-                  <h1 className="text-center mb-4">{t('signUp')}</h1>
+                  <h1 className="text-center mb-4">{t('interface.signUp')}</h1>
                   <Form.Group className="mb-1" controlId="formUsername">
                     <Form.Label>{t('interface.username')}</Form.Label>
                     <Form.Control
