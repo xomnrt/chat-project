@@ -1,4 +1,8 @@
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/xomnrt/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/xomnrt/frontend-project-12/actions)
+## [Веб-приложение] (https://frontend-project-12-chat-los3.onrender.com/)
 
-[Ссылка на приложение](https://frontend-project-12-chat-los3.onrender.com/)
+Приложение поддерживает:
+
+- логин/разлогин,
+- регистрацию нового пользователя,
+- создание/переименование/удаление каналов,
+- отправку и прием сообщений
