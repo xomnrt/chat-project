@@ -1,4 +1,4 @@
-## [Веб-приложение] (https://frontend-project-12-chat-los3.onrender.com/)
+## [Веб-приложение](https://frontend-project-12-chat-los3.onrender.com/)
 
 Приложение поддерживает:
 
