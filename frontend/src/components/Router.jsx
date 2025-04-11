@@ -27,7 +27,7 @@ const Router = () => {
       >
         <Navbar expand="lg" className="bg-body-tertiary shadow-sm">
           <Container>
-            <Link className="navbar-brand" to="/">Hexlet Chat</Link>
+            <Link className="navbar-brand" to="/">Chat</Link>
             {authContext.isLoggedIn() && <LogOutButton />}
           </Container>
         </Navbar>
